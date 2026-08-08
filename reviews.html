@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews | Hot Wheels Veggie Fusion 💬</title>
+<meta name="description" content="Real reviews from real foodies. See what the hype is about.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.12;z-index:-1;pointer-events:none}
+.blob1{width:500px;height:500px;background:var(--neon-pink);top:-150px;right:-150px}
+.blob2{width:400px;height:400px;background:var(--neon-cyan);bottom:-100px;left:-100px}
+
+nav{position:sticky;top:15px;width:92%;max-width:1200px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.hero{width:92%;max-width:1200px;margin:30px auto;text-align:center}
+.hero h1{font-size:42px;font-weight:900;margin-bottom:10px}
+.hero h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{opacity:.7;font-size:16px;max-width:500px;margin:0 auto}
+
+/* Rating Summary */
+.rating-summary{width:92%;max-width:800px;margin:30px auto;display:grid;grid-template-columns:1fr 2fr;gap:30px;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:30px}
+.rating-big{text-align:center}
+.rating-big .num{font-size:64px;font-weight:900;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.rating-big .stars{font-size:24px;margin:8px 0}
+.rating-big .count{font-size:13px;opacity:.6}
+
+.rating-bars{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.rbar{display:flex;align-items:center;gap:10px;font-size:12px}
+.rbar span{min-width:30px;text-align:right}
+.rbar-track{flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.rbar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));transition:width 1s ease}
+
+/* Review Cards */
+.reviews-grid{width:92%;max-width:800px;margin:30px auto;display:grid;gap:16px}
+.review-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;transition:.3s}
+.review-card:hover{border-color:rgba(255,0,110,.2);transform:translateY(-3px)}
+.review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.review-user{display:flex;align-items:center;gap:12px}
+.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
+.review-name{font-weight:700;font-size:15px}
+.review-date{font-size:12px;opacity:.5}
+.review-stars{color:var(--neon-yellow);font-size:14px;letter-spacing:2px}
+.review-text{font-size:14px;line-height:1.7;opacity:.85}
+.review-tag{display:inline-block;margin-top:12px;padding:5px 12px;background:rgba(255,0,110,.15);border:1px solid rgba(255,0,110,.3);border-radius:20px;font-size:11px;font-weight:600;color:var(--neon-pink)}
+
+/* Add Review Form */
+.add-review{width:92%;max-width:800px;margin:40px auto;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:30px;position:relative;overflow:hidden}
+.add-review::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+.add-review h2{font-size:22px;margin-bottom:20px;font-weight:800}
+.add-review h2 span{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;opacity:.8;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+input,textarea,select{width:100%;padding:14px;border:1px solid rgba(255,255,255,.1);outline:none;border-radius:14px;background:var(--card-bg);color:white;font-size:14px;transition:.3s}
+input:focus,textarea:focus,select:focus{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.15)}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.35)}
+
+.star-picker{display:flex;gap:8px;font-size:28px;cursor:pointer}
+.star-picker span{opacity:.3;transition:.2s}
+.star-picker span:hover,.star-picker span.active{opacity:1;text-shadow:0 0 15px rgba(255,252,0,.5)}
+
+.submit-btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;transition:.3s;box-shadow:0 8px 25px rgba(255,0,110,.4);position:relative;overflow:hidden}
+.submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.5s}
+.submit-btn:hover::before{left:100%}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,0,110,.6)}
+
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:768px){
+.hero h1{font-size:28px}
+.rating-summary{grid-template-columns:1fr;text-align:center}
+.rating-big .num{font-size:48px}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<section class="hero">
+<h1>Real <span>Reviews</span> 💬</h1>
+<p>Don't just take our word for it. See what the foodies are saying.</p>
+</section>
+
+<div class="rating-summary">
+<div class="rating-big">
+<div class="num" id="avgRating">4.8</div>
+<div class="stars" id="avgStars">⭐⭐⭐⭐⭐</div>
+<div class="count" id="totalReviews">Based on 12 reviews</div>
+</div>
+<div class="rating-bars">
+<div class="rbar"><span>5⭐</span><div class="rbar-track"><div class="rbar-fill" style="width:75%"></div></div></div>
+<div class="rbar"><span>4⭐</span><div class="rbar-track"><div class="rbar-fill" style="width:17%"></div></div></div>
+<div class="rbar"><span>3⭐</span><div class="rbar-track"><div class="rbar-fill" style="width:8%"></div></div></div>
+<div class="rbar"><span>2⭐</span><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div></div>
+<div class="rbar"><span>1⭐</span><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div></div>
+</div>
+</div>
+
+<div class="reviews-grid" id="reviewsGrid"></div>
+
+<div class="add-review">
+<h2>Add Your <span>Review</span> ✍️</h2>
+<div class="form-group">
+<label>Your Name</label>
+<input type="text" id="revName" placeholder="Enter your name">
+</div>
+<div class="form-group">
+<label>Rating</label>
+<div class="star-picker" id="starPicker">
+<span data-val="1">⭐</span>
+<span data-val="2">⭐</span>
+<span data-val="3">⭐</span>
+<span data-val="4">⭐</span>
+<span data-val="5">⭐</span>
+</div>
+<input type="hidden" id="revRating" value="5">
+</div>
+<div class="form-group">
+<label>Your Review</label>
+<textarea id="revText" rows="4" placeholder="Tell us about your experience..."></textarea>
+</div>
+<div class="form-group">
+<label>Favorite Item</label>
+<select id="revItem">
+<option value="">Pick your favorite...</option>
+<option>Hot Wheels Special Pizza</option>
+<option>Tandoori Momos</option>
+<option>Spicy Paneer Burger</option>
+<option>Pink Sauce Pasta</option>
+<option>Jodhpuri Maggi</option>
+<option>Paneer Schezwan Noodles</option>
+<option>Peri Peri Fries</option>
+<option>Other</option>
+</select>
+</div>
+<button class="submit-btn" onclick="submitReview()">Post Review 🚀</button>
+</div>
+
+<div class="toast" id="toast">✅ Review posted!</div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function updateCartCount(){
+const count = cart.reduce((t,i)=>t+i.qty,0);
+document.getElementById('cart-count').innerText = count;
+}
+updateCartCount();
+
+// Default reviews
+const defaultReviews = [
+{id:1,name:"Rahul S.",rating:5,text:"The Hot Wheels Special Pizza is absolutely insane! The flavors are so unique and the portion size is perfect. Best veg pizza in Jodhpur, no cap.",date:"2 days ago",tag:"Hot Wheels Special Pizza",avatar:"R"},
+{id:2,name:"Priya M.",rating:5,text:"Tandoori Momos hit different here! The smoky flavor and the chutney combo is chef's kiss. Must try for every momo lover.",date:"5 days ago",tag:"Tandoori Momos",avatar:"P"},
+{id:3,name:"Aman K.",rating:4,text:"Black burgers are so aesthetic and tasty! The Spicy Paneer Burger in that black bun is totally Instagram-worthy. Taste matches the looks.",date:"1 week ago",tag:"Spicy Paneer Burger",avatar:"A"},
+{id:4,name:"Sneha R.",rating:5,text:"Pink Sauce Pasta is my comfort food now. Creamy, tangy, and perfectly cooked. Also the ambience is so vibe-y!",date:"1 week ago",tag:"Pink Sauce Pasta",avatar:"S"},
+{id:5,name:"Vikram J.",rating:5,text:"Jodhpuri Maggi is the real deal! The local spice blend makes it so special. I've never had Maggi like this before.",date:"2 weeks ago",tag:"Jodhpuri Maggi",avatar:"V"},
+{id:6,name:"Neha T.",rating:4,text:"Peri Peri Fries are always crispy and well-seasoned. The garlic sauce they serve with it is addictive!",date:"2 weeks ago",tag:"Peri Peri Fries",avatar:"N"},
+{id:7,name:"Arjun P.",rating:5,text:"Came here for the Turkish Pizza and stayed for everything else. The Desi Stuff pizza with that spicy sauce is fire! 🔥",date:"3 weeks ago",tag:"Desi Stuff Pizza",avatar:"A"},
+{id:8,name:"Kavya S.",rating:5,text:"The cafe aesthetic is unmatched. Dark interiors, neon vibes, and the food presentation is top tier. Perfect spot for dates and hangouts.",date:"3 weeks ago",tag:"Cafe Experience",avatar:"K"},
+{id:9,name:"Mohit R.",rating:4,text:"Paneer Schezwan Noodles are my go-to. Good quantity, amazing flavor, and super affordable. Delivery is quick too!",date:"1 month ago",tag:"Paneer Schezwan Noodles",avatar:"M"},
+{id:10,name:"Divya L.",rating:5,text:"Everything here is freshly made. You can literally taste the difference. The 15-20 min wait is totally worth it.",date:"1 month ago",tag:"Fresh Food",avatar:"D"},
+{id:11,name:"Tarun B.",rating:5,text:"Tried the Afghani Soya Chaap Roll and was blown away. The mint sauce and cream combo is genius!",date:"1 month ago",tag:"Afghani Soya Chaap Roll",avatar:"T"},
+{id:12,name:"Ananya G.",rating:4,text:"Cheesy Garlic Bread is the perfect starter. Crispy, buttery, and loaded with cheese. Great place overall!",date:"2 months ago",tag:"Cheesy Garlic Bread",avatar:"A"}
+];
+
+let reviews = JSON.parse(localStorage.getItem('hw_reviews')) || defaultReviews;
+
+function getStars(n){
+let s='';for(let i=0;i<5;i++)s+=i<n?'⭐':'☆';return s;
+}
+
+function renderReviews(){
+const grid = document.getElementById('reviewsGrid');
+grid.innerHTML = reviews.slice().reverse().map(r=>`
+<div class="review-card">
+<div class="review-header">
+<div class="review-user">
+<div class="review-avatar">${r.avatar}</div>
+<div>
+<div class="review-name">${r.name}</div>
+<div class="review-date">${r.date}</div>
+</div>
+</div>
+<div class="review-stars">${getStars(r.rating)}</div>
+</div>
+<div class="review-text">${r.text}</div>
+${r.tag?`<span class="review-tag">${r.tag}</span>`:''}
+</div>
+`).join('');
+
+// Update summary
+const avg = (reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1);
+document.getElementById('avgRating').innerText = avg;
+document.getElementById('avgStars').innerText = getStars(Math.round(avg));
+document.getElementById('totalReviews').innerText = `Based on ${reviews.length} review${reviews.length!==1?'s':''}`;
+}
+
+// Star picker
+let selectedRating = 5;
+document.querySelectorAll('#starPicker span').forEach(star=>{
+star.addEventListener('click',()=>{
+selectedRating = parseInt(star.dataset.val);
+document.getElementById('revRating').value = selectedRating;
+document.querySelectorAll('#starPicker span').forEach((s,i)=>{
+s.classList.toggle('active', i < selectedRating);
+});
+});
+});
+// Init stars
+document.querySelectorAll('#starPicker span').forEach((s,i)=>{s.classList.toggle('active', i < 5);});
+
+function submitReview(){
+const name = document.getElementById('revName').value.trim();
+const text = document.getElementById('revText').value.trim();
+const item = document.getElementById('revItem').value;
+
+if(!name){alert('Enter your name!');return;}
+if(!text){alert('Write a review!');return;}
+
+const newReview = {
+id: Date.now(),
+name: name,
+rating: selectedRating,
+text: text,
+date: 'Just now',
+tag: item || null,
+avatar: name.charAt(0).toUpperCase()
+};
+
+reviews.push(newReview);
+localStorage.setItem('hw_reviews', JSON.stringify(reviews));
+
+// Reset form
+document.getElementById('revName').value = '';
+document.getElementById('revText').value = '';
+document.getElementById('revItem').value = '';
+
+renderReviews();
+showToast('✅ Review posted!');
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+renderReviews();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

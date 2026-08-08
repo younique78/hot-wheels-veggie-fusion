@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rewards | Hot Wheels Veggie Fusion 🏆</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.1;z-index:-1;pointer-events:none}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;right:-100px}
+.blob2{width:350px;height:350px;background:var(--neon-cyan);bottom:-80px;left:-80px}
+
+nav{position:sticky;top:15px;width:92%;max-width:1200px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.container{max-width:900px;margin:auto;padding:20px}
+
+h1{text-align:center;font-size:38px;font-weight:900;margin-bottom:6px}
+h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{text-align:center;opacity:.6;font-size:15px;margin-bottom:35px}
+
+/* User Card */
+.user-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:35px;text-align:center;position:relative;overflow:hidden;margin-bottom:30px}
+.user-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow),var(--neon-lime),var(--neon-cyan))}
+
+.user-avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--neon-pink);box-shadow:0 0 30px rgba(255,0,110,.4);margin-bottom:15px;display:inline-flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));font-weight:800}
+.user-name{font-size:22px;font-weight:700;margin-bottom:4px}
+.user-tier{display:inline-block;padding:6px 18px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-radius:30px;font-size:13px;font-weight:700;margin-bottom:20px;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+
+/* Points Display */
+.points-ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
+.points-ring svg{transform:rotate(-90deg)}
+.points-ring .ring-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:12}
+.points-ring .ring-fill{fill:none;stroke:url(#ringGradient);stroke-width:12;stroke-linecap:round;stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset 1.5s ease}
+.points-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.points-num{font-size:42px;font-weight:900;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.points-label{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+
+/* Stats Row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:500px;margin:0 auto 25px}
+.stat-box{background:rgba(255,255,255,.03);border-radius:16px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,.05)}
+.stat-box .num{font-size:24px;font-weight:800;margin-bottom:2px}
+.stat-box .num.pink{color:var(--neon-pink)}
+.stat-box .num.cyan{color:var(--neon-cyan)}
+.stat-box .num.lime{color:var(--neon-lime)}
+.stat-box .label{font-size:11px;opacity:.5;text-transform:uppercase;letter-spacing:1px}
+
+/* Progress to next tier */
+.tier-progress{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;margin-bottom:25px}
+.tier-progress h3{font-size:15px;margin-bottom:14px;font-weight:700}
+.tier-bar{height:14px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;margin-bottom:10px}
+.tier-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));transition:width 1.5s ease;box-shadow:0 0 15px rgba(255,0,110,.3)}
+.tier-info{display:flex;justify-content:space-between;font-size:12px;opacity:.6}
+.tier-info span{font-weight:700;opacity:1}
+
+/* Rewards Grid */
+.rewards-title{font-size:22px;font-weight:800;margin-bottom:18px;text-align:center}
+.rewards-title span{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.rewards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:25px}
+.reward-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;text-align:center;transition:.4s;position:relative;overflow:hidden}
+.reward-card:hover{transform:translateY(-6px);border-color:rgba(255,0,110,.3);box-shadow:0 15px 35px rgba(255,0,110,.1)}
+.reward-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));opacity:.6}
+.reward-card.locked{opacity:.4;pointer-events:none}
+.reward-card.locked::after{content:'🔒';position:absolute;top:12px;right:12px;font-size:18px}
+
+.reward-icon{font-size:40px;margin-bottom:10px}
+.reward-name{font-size:15px;font-weight:700;margin-bottom:6px}
+.reward-desc{font-size:12px;opacity:.6;margin-bottom:12px;line-height:1.5}
+.reward-points{font-size:13px;font-weight:700;color:var(--neon-yellow);margin-bottom:12px}
+.reward-btn{width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;font-weight:700;font-size:13px;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+.reward-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(255,0,110,.5)}
+.reward-btn:disabled{background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);box-shadow:none;cursor:not-allowed;transform:none}
+.reward-btn.claimed{background:rgba(0,255,136,.15);color:var(--neon-lime);box-shadow:0 4px 15px rgba(0,255,136,.2)}
+
+/* Streak Section */
+.streak-section{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:25px;margin-bottom:25px}
+.streak-section h3{font-size:16px;margin-bottom:16px;font-weight:700}
+.streak-section h3 span{background:linear-gradient(90deg,var(--neon-yellow),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.streak-days{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.streak-day{width:50px;height:70px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.3s}
+.streak-day.done{background:linear-gradient(180deg,rgba(255,0,110,.2),rgba(255,0,110,.05));border-color:rgba(255,0,110,.3);box-shadow:0 4px 15px rgba(255,0,110,.15)}
+.streak-day .day-name{font-size:10px;opacity:.5;text-transform:uppercase;margin-bottom:4px}
+.streak-day .day-icon{font-size:18px}
+
+/* Leaderboard */
+.leaderboard{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:25px}
+.leaderboard h3{font-size:16px;margin-bottom:16px;font-weight:700}
+.leaderboard h3 span{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.lb-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{width:30px;text-align:center;font-weight:800;font-size:16px;opacity:.5}
+.lb-rank.top{color:var(--neon-yellow);opacity:1;text-shadow:0 0 10px rgba(255,252,0,.3)}
+.lb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.lb-info{flex:1}
+.lb-name{font-size:14px;font-weight:600}
+.lb-orders{font-size:11px;opacity:.5}
+.lb-points{font-weight:700;color:var(--neon-yellow)}
+
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:768px){
+h1{font-size:28px}
+.points-ring{width:150px;height:150px}
+.points-num{font-size:34px}
+.rewards-grid{grid-template-columns:1fr}
+.streak-day{width:40px;height:60px}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Rewards</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+
+<h1>HW <span>Rewards</span> 🏆</h1>
+<p class="subtitle">Order more, earn points, unlock free food. It's that simple.</p>
+
+<!-- User Card -->
+<div class="user-card">
+<div class="user-avatar" id="userAvatar">👤</div>
+<div class="user-name" id="userName">Guest Foodie</div>
+<div class="user-tier" id="userTier">🥉 Bronze Member</div>
+
+<!-- Points Ring -->
+<div class="points-ring">
+<svg width="180" height="180" viewBox="0 0 180 180">
+<defs>
+<linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:#ff006e"/>
+<stop offset="50%" style="stop-color:#ff8a00"/>
+<stop offset="100%" style="stop-color:#fffc00"/>
+</linearGradient>
+</defs>
+<circle class="ring-bg" cx="90" cy="90" r="80"/>
+<circle class="ring-fill" cx="90" cy="90" r="80" id="ringFill"/>
+</svg>
+<div class="points-text">
+<div class="points-num" id="pointsNum">0</div>
+<div class="points-label">Points</div>
+</div>
+</div>
+
+<div class="stats-row">
+<div class="stat-box">
+<div class="num pink" id="statOrders">0</div>
+<div class="label">Orders</div>
+</div>
+<div class="stat-box">
+<div class="num cyan" id="statStreak">0</div>
+<div class="label">Day Streak</div>
+</div>
+<div class="stat-box">
+<div class="num lime" id="statClaimed">0</div>
+<div class="label">Rewards</div>
+</div>
+</div>
+</div>
+
+<!-- Tier Progress -->
+<div class="tier-progress">
+<h3>🎯 Progress to <span id="nextTierName">Silver</span></h3>
+<div class="tier-bar"><div class="tier-fill" id="tierFill" style="width:0%"></div></div>
+<div class="tier-info"><span id="currentPoints">0 pts</span><span id="neededPoints">500 pts needed</span></div>
+</div>
+
+<!-- Streak -->
+<div class="streak-section">
+<h3>🔥 <span>Weekly Streak</span> — Order 3 days in a row for bonus points!</h3>
+<div class="streak-days" id="streakDays"></div>
+</div>
+
+<!-- Rewards -->
+<div class="rewards-title">🎁 Unlock <span>Rewards</span></div>
+<div class="rewards-grid" id="rewardsGrid"></div>
+
+<!-- Leaderboard -->
+<div class="leaderboard">
+<h3>🏆 <span>Top Foodies</span> This Month</h3>
+<div id="leaderboard"></div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+// Default user data
+const defaultUser = {
+name: 'Guest Foodie',
+points: 320,
+orders: 8,
+streak: 2,
+claimed: ['reward1'],
+tier: 'bronze',
+weekStreak: [true, true, false, false, false, false, false]
+};
+
+let user = JSON.parse(localStorage.getItem('hw_loyalty_user')) || {...defaultUser};
+
+const tiers = {
+bronze: {name: '🥉 Bronze', next: 'silver', min: 0, max: 500},
+silver: {name: '🥈 Silver', next: 'gold', min: 500, max: 1500},
+gold: {name: '🥇 Gold', next: 'platinum', min: 1500, max: 3000},
+platinum: {name: '💎 Platinum', next: null, min: 3000, max: 99999}
+};
+
+const rewards = [
+{id:'reward1',name:'Free Fries 🍟',desc:'Get a free Peri Peri Fries with your next order',points:200,icon:'🍟'},
+{id:'reward2',name:'₹50 Off 💰',desc:'Flat ₹50 discount on orders above ₹300',points:350,icon:'💰'},
+{id:'reward3',name:'Free Momos 🥟',desc:'Free Steamed Momos (8 pcs) with any pizza',points:500,icon:'🥟'},
+{id:'reward4',name:'Free Burger 🍔',desc:'Free Original Aloo Tikki Burger',points:750,icon:'🍔'},
+{id:'reward5',name:'Free Pizza 🍕',desc:'Free Margherita Pizza on your birthday week',points:1000,icon:'🍕'},
+{id:'reward6',name:'20% Off 🎉',desc:'20% off on your entire order. No minimum!',points:1200,icon:'🎉'}
+];
+
+const leaderboard = [
+{name:'Rahul S.',orders:24,points:2450,avatar:'R'},
+{name:'Priya M.',orders:19,points:1980,avatar:'P'},
+{name:'Aman K.',orders:16,points:1650,avatar:'A'},
+{name:'Sneha R.',orders:14,points:1420,avatar:'S'},
+{name:'Vikram J.',orders:12,points:1180,avatar:'V'}
+];
+
+function getTierInfo(){
+return tiers[user.tier] || tiers.bronze;
+}
+
+function updateUI(){
+// User info
+document.getElementById('userName').innerText = user.name;
+const t = getTierInfo();
+document.getElementById('userTier').innerText = t.name + ' Member';
+document.getElementById('pointsNum').innerText = user.points;
+document.getElementById('statOrders').innerText = user.orders;
+document.getElementById('statStreak').innerText = user.streak;
+document.getElementById('statClaimed').innerText = user.claimed.length;
+
+// Ring animation
+const maxPts = t.max;
+const pct = Math.min((user.points / maxPts) * 100, 100);
+const circumference = 2 * Math.PI * 80;
+const offset = circumference - (pct / 100) * circumference;
+setTimeout(()=>{
+document.getElementById('ringFill').style.strokeDashoffset = offset;
+}, 300);
+
+// Tier progress
+if(t.next){
+const nextT = tiers[t.next];
+const needed = nextT.min - user.points;
+const progress = ((user.points - t.min) / (nextT.min - t.min)) * 100;
+document.getElementById('nextTierName').innerText = nextT.name;
+document.getElementById('tierFill').style.width = Math.min(progress, 100) + '%';
+document.getElementById('currentPoints').innerText = user.points + ' pts';
+document.getElementById('neededPoints').innerText = needed + ' pts to ' + nextT.name;
+} else {
+document.getElementById('nextTierName').innerText = 'Max Tier!';
+document.getElementById('tierFill').style.width = '100%';
+document.getElementById('neededPoints').innerText = 'You are max tier!';
+}
+
+// Streak days
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+document.getElementById('streakDays').innerHTML = days.map((d,i)=>`
+<div class="streak-day ${user.weekStreak[i]?'done':''}">
+<div class="day-name">${d}</div>
+<div class="day-icon">${user.weekStreak[i]?'🔥':'○'}</div>
+</div>
+`).join('');
+
+// Rewards
+renderRewards();
+
+// Leaderboard
+document.getElementById('leaderboard').innerHTML = leaderboard.map((p,i)=>`
+<div class="lb-row">
+<div class="lb-rank ${i<3?'top':''}">${i+1}</div>
+<div class="lb-avatar">${p.avatar}</div>
+<div class="lb-info">
+<div class="lb-name">${p.name}</div>
+<div class="lb-orders">${p.orders} orders</div>
+</div>
+<div class="lb-points">${p.points} pts</div>
+</div>
+`).join('');
+}
+
+function renderRewards(){
+document.getElementById('rewardsGrid').innerHTML = rewards.map(r=>{
+const canClaim = user.points >= r.points;
+const claimed = user.claimed.includes(r.id);
+return `
+<div class="reward-card ${!canClaim && !claimed ? 'locked' : ''}">
+<div class="reward-icon">${r.icon}</div>
+<div class="reward-name">${r.name}</div>
+<div class="reward-desc">${r.desc}</div>
+<div class="reward-points">${r.points} Points</div>
+<button class="reward-btn ${claimed?'claimed':''}" onclick="claimReward('${r.id}')" ${!canClaim || claimed ? 'disabled' : ''}>
+${claimed ? '✅ Claimed' : canClaim ? 'Claim Reward 🎁' : '🔒 Locked'}
+</button>
+</div>
+`;
+}).join('');
+}
+
+function claimReward(id){
+const reward = rewards.find(r=>r.id===id);
+if(!reward || user.points < reward.points) return;
+if(user.claimed.includes(id)){showToast('Already claimed!');return;}
+
+user.points -= reward.points;
+user.claimed.push(id);
+localStorage.setItem('hw_loyalty_user', JSON.stringify(user));
+updateUI();
+showToast(`🎉 ${reward.name} claimed!`);
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+// Simulate earning points from orders
+function earnPoints(amount){
+user.points += amount;
+user.orders += 1;
+// Check tier upgrade
+for(const [key,t] of Object.entries(tiers)){
+if(user.points >= t.min && (!t.next || user.points < tiers[t.next].min)){
+user.tier = key;
+}
+}
+localStorage.setItem('hw_loyalty_user', JSON.stringify(user));
+updateUI();
+}
+
+// Demo: add points button (hidden in production, useful for testing)
+// Uncomment below to add test points
+// setTimeout(()=>earnPoints(50), 2000);
+
+updateUI();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

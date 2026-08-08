@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibes | Hot Wheels Veggie Fusion ✨</title>
+<meta name="description" content="The aesthetic, the food, the vibes. Hot Wheels Veggie Fusion gallery.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.12;z-index:-1;pointer-events:none}
+.blob1{width:500px;height:500px;background:var(--neon-pink);top:-150px;left:-150px}
+.blob2{width:400px;height:400px;background:var(--neon-cyan);bottom:-100px;right:-100px}
+
+nav{position:sticky;top:15px;width:92%;max-width:1200px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.hero{width:92%;max-width:1200px;margin:30px auto;text-align:center}
+.hero h1{font-size:42px;font-weight:900;margin-bottom:10px}
+.hero h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{opacity:.7;font-size:16px;max-width:500px;margin:0 auto}
+
+/* Gallery Grid */
+.gallery{width:92%;max-width:1200px;margin:40px auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.gal-item{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;aspect-ratio:1;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);transition:.4s}
+.gal-item:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(255,0,110,.4);box-shadow:0 20px 40px rgba(255,0,110,.15)}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.gal-item:hover img{transform:scale(1.1)}
+.gal-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.8));display:flex;flex-direction:column;justify-content:flex-end;padding:20px;opacity:0;transition:.4s}
+.gal-item:hover .gal-overlay{opacity:1}
+.gal-overlay h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.gal-overlay p{font-size:12px;opacity:.8}
+.gal-badge{position:absolute;top:12px;right:12px;padding:6px 12px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-radius:20px;font-size:11px;font-weight:700;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+
+/* Featured row */
+.featured{width:92%;max-width:1200px;margin:30px auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}
+.featured .gal-item{aspect-ratio:auto}
+.featured .gal-item:first-child{grid-row:span 2}
+.featured .gal-item:first-child .gal-overlay h3{font-size:22px}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;z-index:5000;backdrop-filter:blur(10px);padding:20px}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90%;max-height:85vh;border-radius:16px;border:2px solid rgba(255,255,255,.1);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lightbox-close{position:absolute;top:20px;right:30px;font-size:40px;color:white;cursor:pointer;opacity:.7;transition:.3s}
+.lightbox-close:hover{opacity:1;transform:scale(1.1)}
+.lightbox-caption{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;background:rgba(0,0,0,.6);padding:10px 24px;border-radius:20px;font-size:14px;font-weight:600}
+
+/* Category filter */
+.filter-bar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:25px auto;width:92%;max-width:1200px}
+.filter-btn{padding:8px 18px;border:1px solid rgba(255,255,255,.1);border-radius:30px;background:var(--card-bg);color:white;font-weight:600;cursor:pointer;transition:.3s;font-size:12px}
+.filter-btn:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+.filter-btn.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-color:transparent;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:768px){
+.hero h1{font-size:28px}
+.featured{grid-template-columns:1fr}
+.featured .gal-item:first-child{grid-row:span 1}
+.gallery{grid-template-columns:1fr}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<section class="hero">
+<h1>The <span>Vibes</span> ✨</h1>
+<p>A peek into our world — the food, the aesthetic, the energy. Pure serotonin.</p>
+</section>
+
+<div class="filter-bar">
+<button class="filter-btn active" data-filter="all">✨ All</button>
+<button class="filter-btn" data-filter="food">🍕 Food</button>
+<button class="filter-btn" data-filter="ambience">🌙 Ambience</button>
+<button class="filter-btn" data-filter="menu">📋 Menu</button>
+</div>
+
+<div class="featured" id="featured">
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800" alt="Pizza">
+<div class="gal-overlay"><h3>Hot Wheels Special Pizza 🔥</h3><p>The main character of our menu</p></div>
+<span class="gal-badge">BESTSELLER</span>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800" alt="Momos">
+<div class="gal-overlay"><h3>Tandoori Momos 🥟</h3><p>Grilled to perfection</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800" alt="Burger">
+<div class="gal-overlay"><h3>Black Burger 🍔</h3><p>Iconic vibes only</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800" alt="Pasta">
+<div class="gal-overlay"><h3>Pink Sauce Pasta 🍝</h3><p>Creamy dreamy</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1552611052-33e04de081de?w=800" alt="Noodles">
+<div class="gal-overlay"><h3>Paneer Schezwan Noodles 🥡</h3><p>Desi Chinese that slaps</p></div>
+</div>
+</div>
+
+<div class="gallery" id="gallery">
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=800" alt="Fries">
+<div class="gal-overlay"><h3>Peri Peri Fries 🍟</h3><p>Crispy & spicy</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1625220194771-7eb586ea7028?w=800" alt="Fried Momos">
+<div class="gal-overlay"><h3>Fried Momos 🔥</h3><p>Golden & crunchy</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800" alt="Paneer Burger">
+<div class="gal-overlay"><h3>Spicy Paneer Burger 🍔</h3><p>Black bun energy</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800" alt="Pasta">
+<div class="gal-overlay"><h3>Cheesy Baked Pasta 🧀</h3><p>Comfort in a bowl</p></div>
+</div>
+<div class="gal-item" data-cat="ambience" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" alt="Cafe">
+<div class="gal-overlay"><h3>Cafe Vibes 🌙</h3><p>The aesthetic spot</p></div>
+</div>
+<div class="gal-item" data-cat="ambience" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800" alt="Interior">
+<div class="gal-overlay"><h3>Interior Energy ✨</h3><p>Where the magic happens</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800" alt="Garlic Bread">
+<div class="gal-overlay"><h3>Cheesy Garlic Bread 🥖</h3><p>Buttery goodness</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800" alt="Wrap">
+<div class="gal-overlay"><h3>Crispy Paneer Wrap 🌯</h3><p>Wrapped with love</p></div>
+</div>
+<div class="gal-item" data-cat="menu" onclick="openLightbox(this)">
+<img src="logo.png" alt="Menu Card">
+<div class="gal-overlay"><h3>Our Menu Card 📋</h3><p>The OG yellow menu</p></div>
+<span class="gal-badge">MENU</span>
+</div>
+<div class="gal-item" data-cat="ambience" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" alt="Seating">
+<div class="gal-overlay"><h3>Chill Zone 🛋️</h3><p>Pull up a seat</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800" alt="Tandoor">
+<div class="gal-overlay"><h3>Tandoori Soya Chaap 🔥</h3><p>Smoky & delicious</p></div>
+</div>
+<div class="gal-item" data-cat="food" onclick="openLightbox(this)">
+<img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800" alt="Maggi">
+<div class="gal-overlay"><h3>Jodhpuri Maggi 🍜</h3><p>The legendary fusion</p></div>
+</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<span class="lightbox-close">&times;</span>
+<img id="lightbox-img" src="" alt="">
+<div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function updateCartCount(){
+const count = cart.reduce((t,i)=>t+i.qty,0);
+document.getElementById('cart-count').innerText = count;
+}
+updateCartCount();
+
+function openLightbox(el){
+const img = el.querySelector('img');
+const title = el.querySelector('.gal-overlay h3').innerText;
+document.getElementById('lightbox-img').src = img.src;
+document.getElementById('lightbox-caption').innerText = title;
+document.getElementById('lightbox').classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+document.getElementById('lightbox').classList.remove('active');
+document.body.style.overflow = '';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+btn.addEventListener('click',()=>{
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+const filter = btn.dataset.filter;
+document.querySelectorAll('.gal-item').forEach(item=>{
+if(filter==='all' || item.dataset.cat===filter){
+item.style.display='block';
+setTimeout(()=>item.style.opacity='1',10);
+} else {
+item.style.opacity='0';
+setTimeout(()=>item.style.display='none',300);
+}
+});
+});
+});
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

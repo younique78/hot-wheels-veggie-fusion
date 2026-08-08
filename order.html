@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Order | Hot Wheels Veggie Fusion 🛒</title>
+<meta name="description" content="Review your cart and place your order. We deliver the vibes.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);min-height:100vh;padding:20px;color:white}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.12;z-index:-1;pointer-events:none}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;right:-100px}
+.blob2{width:350px;height:350px;background:var(--neon-cyan);bottom:-80px;left:-80px}
+
+.container{max-width:850px;margin:auto}
+
+nav{width:92%;max-width:850px;margin:0 auto 20px;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+h1{text-align:center;margin-bottom:20px;font-size:28px;font-weight:800}
+h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.glass{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;position:relative;overflow:hidden}
+.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+
+/* Cart Section */
+.cart-section{padding:22px;margin-bottom:18px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:16px;margin-bottom:10px;background:rgba(255,255,255,.05);border-radius:18px;transition:.3s;border:1px solid transparent}
+.cart-item:hover{background:rgba(255,255,255,.08);border-color:rgba(255,0,110,.2)}
+.item-info{flex:1}
+.item-name{font-size:16px;font-weight:700}
+.item-price{opacity:.6;margin-top:3px;font-size:12px}
+.item-total{font-size:14px;font-weight:700;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:3px}
+
+.qty-controls{display:flex;align-items:center;gap:8px}
+.qty-btn{width:34px;height:34px;border:none;border-radius:12px;cursor:pointer;font-size:15px;font-weight:bold;background:rgba(255,255,255,.1);color:white;transition:.3s;border:1px solid rgba(255,255,255,.1)}
+.qty-btn:hover{background:rgba(255,0,110,.3);border-color:rgba(255,0,110,.5)}
+.remove-btn{background:rgba(255,50,50,.2);margin-left:6px;font-size:13px}
+.remove-btn:hover{background:rgba(255,50,50,.5)}
+
+.total{text-align:right;font-size:24px;font-weight:800;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.total span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.bill-breakdown{margin-top:10px;padding:10px 0}
+.bill-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;opacity:.7}
+.bill-row.total-row{font-size:17px;font-weight:700;border-top:1px solid rgba(255,255,255,.1);margin-top:6px;padding-top:10px;opacity:1}
+
+/* Empty Cart */
+.empty-cart{text-align:center;padding:45px 20px}
+.empty-cart span{font-size:55px;display:block;margin-bottom:12px}
+.empty-cart p{font-size:16px;opacity:.8;margin-bottom:18px}
+.empty-cart a{color:var(--neon-pink);text-decoration:none;font-weight:700}
+
+/* Form */
+.form-section{padding:22px;margin-bottom:18px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;opacity:.8;margin-bottom:5px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+input,textarea{width:100%;padding:14px;border:1px solid rgba(255,255,255,.1);outline:none;border-radius:14px;background:var(--card-bg);color:white;font-size:14px;transition:.3s}
+input:focus,textarea:focus{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.15)}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.35)}
+
+.order-btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;transition:.3s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 25px rgba(255,0,110,.4);position:relative;overflow:hidden}
+.order-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.5s}
+.order-btn:hover::before{left:100%}
+.order-btn:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,0,110,.6)}
+
+/* T&C */
+.tc-section{padding:18px 22px;margin-top:14px}
+.tc-section h3{font-size:15px;margin-bottom:10px;font-weight:700}
+.tc-section h3 span{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tc-section ul{margin-left:18px;font-size:12px;opacity:.7;line-height:1.9}
+
+/* Home Button */
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan);box-shadow:0 8px 25px rgba(0,212,255,.3)}
+
+/* Success Overlay */
+.success-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;z-index:3000;backdrop-filter:blur(8px)}
+.success-overlay.active{display:flex}
+.success-box{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);color:white;padding:40px;border-radius:24px;text-align:center;max-width:380px;width:90%;animation:pop .4s;position:relative;overflow:hidden}
+.success-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow))}
+.success-box .check{font-size:55px;margin-bottom:12px}
+.success-box h2{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;font-size:24px}
+.success-box p{margin-bottom:20px;opacity:.7;font-size:14px}
+.success-box .btn{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:700;display:inline-block;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+@media(max-width:600px){
+h1{font-size:22px}
+.cart-item{flex-direction:column;align-items:flex-start;gap:10px}
+.qty-controls{align-self:flex-end}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+
+<h1>🛒 Your <span>Order</span></h1>
+
+<div class="glass cart-section">
+<div id="cart-items"></div>
+<div id="bill-breakdown"></div>
+<div class="total">Total: <span id="total">₹0</span></div>
+</div>
+
+<div class="glass form-section">
+<div class="form-group">
+<label>👤 Your Name</label>
+<input type="text" id="customerName" placeholder="Enter your full name">
+</div>
+<div class="form-group">
+<label>📱 Mobile Number</label>
+<input type="tel" id="mobile" placeholder="10-digit mobile number" maxlength="10">
+</div>
+<div class="form-group">
+<label>📍 Delivery Address</label>
+<textarea id="address" rows="4" placeholder="Enter your complete delivery address"></textarea>
+</div>
+<div class="form-group">
+<label>📝 Extra Requests (Optional)</label>
+<textarea id="extras" rows="2" placeholder="Any special instructions, extra sauce, toppings, etc."></textarea>
+</div>
+<button class="order-btn" onclick="placeOrder()">
+📲 Place Order on WhatsApp
+</button>
+</div>
+
+<div class="glass tc-section">
+<h3>📋 <span>Terms & Conditions</span></h3>
+<ul>
+<li>Extra Sauce (Schezwan / Mayonnaise) — ₹20/-</li>
+<li>Extra Topping (Cheese / Olives / Jalapeno) — ₹30/-</li>
+<li>We believe in serving freshly cooked, fry and baked food. Minimum serving time is 15-20 minutes.</li>
+</ul>
+</div>
+
+</div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<div class="success-overlay" id="successOverlay">
+<div class="success-box">
+<div class="check">🎉</div>
+<h2>Order Placed!</h2>
+<p>Your order has been sent via WhatsApp. We'll confirm shortly!</p>
+<a href="home.html" class="btn">Back to Home</a>
+</div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function renderCart(){
+const cartItems = document.getElementById("cart-items");
+const totalElement = document.getElementById("total");
+const billDiv = document.getElementById("bill-breakdown");
+
+cartItems.innerHTML = "";
+let subtotal = 0;
+
+if(cart.length === 0){
+cartItems.innerHTML = `
+<div class="empty-cart">
+<span>🍔</span>
+<p>Your cart is empty, bestie</p>
+<a href="menu.html">Browse Menu →</a>
+</div>
+`;
+totalElement.innerText = "₹0";
+billDiv.innerHTML = "";
+return;
+}
+
+cart.forEach((item,index)=>{
+subtotal += item.price * item.qty;
+cartItems.innerHTML += `
+<div class="cart-item">
+<div class="item-info">
+<div class="item-name">${item.name}</div>
+<div class="item-price">₹${item.price} each</div>
+<div class="item-total">₹${item.price * item.qty}</div>
+</div>
+<div class="qty-controls">
+<button class="qty-btn" onclick="decreaseQty(${index})">−</button>
+<span style="font-weight:700;min-width:18px;text-align:center">${item.qty}</span>
+<button class="qty-btn" onclick="increaseQty(${index})">+</button>
+<button class="qty-btn remove-btn" onclick="removeItem(${index})" title="Remove">🗑️</button>
+</div>
+</div>
+`;
+});
+
+const total = subtotal;
+totalElement.innerText = "₹" + total;
+
+let billHTML = `<div class="bill-row"><span>Subtotal (${cart.reduce((t,i)=>t+i.qty,0)} items)</span><span>₹${subtotal}</span></div>`;
+billHTML += `<div class="bill-row total-row"><span>Total Amount</span><span>₹${total}</span></div>`;
+billDiv.innerHTML = billHTML;
+}
+
+function increaseQty(index){cart[index].qty++;saveCart();}
+function decreaseQty(index){cart[index].qty--;if(cart[index].qty<=0)cart.splice(index,1);saveCart();}
+function removeItem(index){if(confirm(`Remove "${cart[index].name}" from cart?`)){cart.splice(index,1);saveCart();}}
+function saveCart(){localStorage.setItem("cart",JSON.stringify(cart));renderCart();}
+
+function placeOrder(){
+const name = document.getElementById("customerName").value.trim();
+const mobile = document.getElementById("mobile").value.trim();
+const address = document.getElementById("address").value.trim();
+const extras = document.getElementById("extras").value.trim();
+
+if(cart.length===0){alert("Your cart is empty! Add some delicious food first.");return;}
+if(!name){alert("Please enter your name.");return;}
+if(!mobile || mobile.length<10){alert("Please enter a valid 10-digit mobile number.");return;}
+if(!address){alert("Please enter your delivery address.");return;}
+
+let orderText = "🍔 *Hot Wheels Veggie Fusion Order* %0A%0A";
+orderText += "*Items:*%0A";
+cart.forEach(item=>{orderText += `• ${item.name} x ${item.qty} = ₹${item.price*item.qty}%0A`; });
+
+let total = cart.reduce((sum,item)=>sum+(item.price*item.qty),0);
+orderText += `%0A*Total: ₹${total}*%0A%0A`;
+orderText += `*Name:* ${name}%0A`;
+orderText += `*Mobile:* ${mobile}%0A`;
+orderText += `*Address:* ${address}%0A`;
+if(extras) orderText += `*Extras:* ${extras}%0A`;
+orderText += "%0A_Minimum serving time: 15-20 mins_ %0A%0AThank you! 😊";
+
+const whatsappNumber = "917976313879";
+localStorage.removeItem("cart");
+document.getElementById("successOverlay").classList.add("active");
+setTimeout(()=>{window.open(`https://wa.me/${whatsappNumber}?text=${orderText}`, "_blank");},800);
+}
+
+renderCart();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

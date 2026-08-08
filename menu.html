@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu | Hot Wheels Veggie Fusion 🔥</title>
+<meta name="description" content="66+ items that absolutely slap. Turkish Pizza, Momos, Black Burgers, Pasta & more.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:100px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.15;z-index:-1;pointer-events:none}
+.blob1{width:500px;height:500px;background:var(--neon-pink);top:-150px;right:-150px}
+.blob2{width:400px;height:400px;background:var(--neon-cyan);bottom:-100px;left:-100px}
+
+nav{position:sticky;top:15px;width:92%;max-width:1200px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;align-items:center;gap:12px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.hero{width:92%;max-width:1200px;margin:20px auto}
+.banner{padding:35px;border-radius:28px;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.banner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));background-size:200% 100%;animation:shimmer 3s linear infinite}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.banner img{height:65px;width:65px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.4)}
+.banner-text h1{font-size:26px;margin-bottom:4px;font-weight:800}
+.banner-text h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.banner-text p{opacity:.7;font-size:14px}
+
+.search{width:92%;max-width:1200px;margin:20px auto}
+.search input{width:100%;padding:16px 22px;border-radius:18px;border:1px solid rgba(255,255,255,.1);outline:none;background:var(--card-bg);color:white;font-size:15px;transition:.3s}
+.search input:focus{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.2)}
+.search input::placeholder{color:rgba(255,255,255,.4)}
+
+.categories{display:flex;gap:8px;flex-wrap:wrap;width:92%;max-width:1200px;margin:20px auto}
+.categories button{padding:10px 18px;border:1px solid rgba(255,255,255,.1);border-radius:30px;background:var(--card-bg);color:white;font-weight:600;cursor:pointer;transition:.3s;font-size:12px;white-space:nowrap}
+.categories button:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-2px)}
+.categories button.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-color:transparent;color:white;font-weight:700;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+
+.grid{width:92%;max-width:1200px;margin:30px auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:22px;overflow:hidden;transition:.4s;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-8px);border-color:rgba(255,0,110,.3);box-shadow:0 20px 40px rgba(255,0,110,.12)}
+.card img{width:100%;height:170px;object-fit:cover;transition:.4s}
+.card:hover img{transform:scale(1.05)}
+.content{padding:16px;flex:1;display:flex;flex-direction:column}
+.content h3{font-size:15px;margin-bottom:4px;font-weight:700}
+.rating{font-size:12px;opacity:.8;margin-bottom:6px}
+.desc{font-size:12px;opacity:.65;margin-bottom:10px;line-height:1.5;flex:1}
+.price-row{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.price{font-size:22px;font-weight:800;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.add{padding:10px 18px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;font-weight:700;font-size:13px;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+.add:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(255,0,110,.5)}
+.add:active{transform:scale(.95)}
+
+.floating{position:fixed;bottom:25px;right:25px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 22px;border-radius:50px;text-decoration:none;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);display:flex;align-items:center;gap:10px;transition:.3s;z-index:999;border:2px solid rgba(255,255,255,.1)}
+.floating:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 12px 35px rgba(255,0,110,.6)}
+.home-float{position:fixed;bottom:25px;left:25px;width:50px;height:50px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:20px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan);box-shadow:0 8px 25px rgba(0,212,255,.3)}
+
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.no-results{text-align:center;padding:60px;font-size:18px;opacity:.7;grid-column:1/-1}
+.no-results span{font-size:50px;display:block;margin-bottom:10px}
+
+.item-count{text-align:center;margin-bottom:15px;font-size:13px;opacity:.5}
+
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+.banner h1{font-size:20px}
+.categories button{padding:8px 14px;font-size:11px}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<section class="hero">
+<div class="banner">
+<img src="logo.png" alt="Logo">
+<div class="banner-text">
+<h1>Our Full <span>Menu</span> 🔥</h1>
+<p>66 delicious items across 10 categories. Freshly cooked, zero cap. Tap to add!</p>
+</div>
+</div>
+</section>
+
+<div class="search">
+<input id="search" placeholder="🔍 Search food, category, or ingredient..." autocomplete="off">
+</div>
+
+<div class="categories">
+<button class="active" data-cat="all">🍽️ All</button>
+<button data-cat="turkish-pizza">🍕 Turkish Pizza</button>
+<button data-cat="momos">🥟 Momos</button>
+<button data-cat="burger">🍔 Black Burger</button>
+<button data-cat="pasta">🍝 Pasta</button>
+<button data-cat="chinese">🥡 Chinese</button>
+<button data-cat="fries">🍟 Fries</button>
+<button data-cat="garlic-bread">🥖 Garlic Bread</button>
+<button data-cat="rolls">🌯 Rolls</button>
+<button data-cat="tandoor">🔥 Tandoor</button>
+<button data-cat="maggi">🍜 Maggi</button>
+</div>
+
+<div class="item-count" id="item-count">Showing all 66 items</div>
+
+<section class="grid" id="grid"></section>
+
+<div class="toast" id="toast">✅ Added to cart!</div>
+<a href="order.html" class="floating">🛒 Cart (<span id="cart-float">0</span>)</a>
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+const menuItems = [
+{id:1,name:"Veggie Paradise",price:190,category:"turkish-pizza",rating:"⭐ 4.7",desc:"Turkish pizza base topped with signature sauce, onion, bell pepper, olives & mozzarella cheese.",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800"},
+{id:2,name:"Desi Stuff",price:220,category:"turkish-pizza",rating:"⭐ 4.8",desc:"Turkish pizza base topped with signature sauce, onion, bell pepper, spicy sauce, olive & mozzarella cheese.",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"},
+{id:3,name:"Tandoori Veg",price:210,category:"turkish-pizza",rating:"⭐ 4.7",desc:"Turkish pizza base topped with smokey veggie, olives and mozzarella cheese.",img:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800"},
+{id:4,name:"Paneer Tikka",price:220,category:"turkish-pizza",rating:"⭐ 4.8",desc:"Turkish pizza base topped with tandoori marinated paneer, onion, bell pepper, olives and mozzarella cheese.",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800"},
+{id:5,name:"Margherita Pizza",price:190,category:"turkish-pizza",rating:"⭐ 4.6",desc:"Turkish pizza base topped with lots of mozzarella cheese, basil and oregano leaves.",img:"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=800"},
+{id:6,name:"Peppy Paneer",price:240,category:"turkish-pizza",rating:"⭐ 4.8",desc:"Turkish pizza base topped with spicy paneer, onion, capsicum, olive, jalapeno and mozzarella cheese.",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"},
+{id:7,name:"Hot & Spicy Paneer",price:240,category:"turkish-pizza",rating:"⭐ 4.9",desc:"Turkish pizza base topped with African tangy and spicy sauce, paneer, onion, capsicum, olives, jalapeno and mozzarella cheese.",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800"},
+{id:8,name:"Hot Wheels Special",price:230,category:"turkish-pizza",rating:"⭐ 5.0",desc:"A tangy, bit spicy but yet a healthy innovation to satisfy the taste buds of our local audience.",img:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800"},
+{id:9,name:"Three Cheese",price:240,category:"turkish-pizza",rating:"⭐ 4.8",desc:"Turkish pizza base topped with orange cheddar, mozzarella cheese & colby cheese sauce.",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800"},
+{id:10,name:"Paneer Korma",price:230,category:"turkish-pizza",rating:"⭐ 4.7",desc:"Turkish pizza base topped with korma marinated paneer, onion, capsicum, olives, jalapeno and mozzarella cheese.",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"},
+{id:11,name:"Paneer Makhni",price:240,category:"turkish-pizza",rating:"⭐ 4.8",desc:"Turkish pizza base topped with onion, capsicum, olives, jalapeno, makhni sauce paneer & mozzarella cheese.",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800"},
+{id:12,name:"Smoked Paneer",price:240,category:"turkish-pizza",rating:"⭐ 4.9",desc:"Turkish pizza base topped with tandoor smoked flavored paneer, spicy masala and vegetables. Garnished with cheese and baked to perfection.",img:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800"},
+{id:13,name:"Soya Pepperoni",price:220,category:"turkish-pizza",rating:"⭐ 4.6",desc:"Turkish pizza base topped with marinated soya pepperoni, onion, capsicum, olives, jalapeno & mozzarella cheese.",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800"},
+{id:14,name:"Steamed Momos",price:100,category:"momos",rating:"⭐ 4.7",desc:"Dumplings stuffed with veggies tossed in Chinese tadka, steamed to perfection & served with chilli garlic chutney. (8 pcs)",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{id:15,name:"Paneer Steamed Momos",price:130,category:"momos",rating:"⭐ 4.8",desc:"Dumplings stuffed with spicy masala and paneer. (8 pcs)",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{id:16,name:"Fried Momos",price:140,category:"momos",rating:"⭐ 4.7",desc:"Dumplings stuffed with veggies tossed in Chinese tadka, deep fried to perfection & served with chilli garlic chutney. (8 pcs)",img:"https://images.unsplash.com/photo-1625220194771-7eb586ea7028?w=800"},
+{id:17,name:"Paneer Fried Momos",price:160,category:"momos",rating:"⭐ 4.8",desc:"Fried dumplings filled with spicy masala and paneer. (8 pcs)",img:"https://images.unsplash.com/photo-1625220194771-7eb586ea7028?w=800"},
+{id:18,name:"Kurkure Momos",price:170,category:"momos",rating:"⭐ 4.9",desc:"Crispy dumplings filled with spicy masala and veggies. (8 pcs)",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{id:19,name:"Tawa Momos",price:200,category:"momos",rating:"⭐ 4.8",desc:"Pan fried dumplings tossed in desi tawa masala with garlic and veggies. (8 pcs)",img:"https://images.unsplash.com/photo-1625220194771-7eb586ea7028?w=800"},
+{id:20,name:"Tandoori Momos",price:210,category:"momos",rating:"⭐ 4.9",desc:"Dumplings marinated in curd based tandoori masala & grilled to perfection. (8 pcs)",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{id:21,name:"Creamy Momos",price:210,category:"momos",rating:"⭐ 4.8",desc:"Fried dumplings tossed with fresh cream, tangy masala and spices. (8 pcs)",img:"https://images.unsplash.com/photo-1625220194771-7eb586ea7028?w=800"},
+{id:22,name:"Chilly Garlic Momos",price:200,category:"momos",rating:"⭐ 4.7",desc:"Fried dumplings tossed in hot chilly garlic sauce and balanced portion of veggies. (8 pcs)",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{id:23,name:"The Original Aloo Tikki",price:80,category:"burger",rating:"⭐ 4.6",desc:"The tangy aloo tikki baked to perfection, American cheese, orange sauce, tomato & onion relish.",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"},
+{id:24,name:"The Special Burger",price:90,category:"burger",rating:"⭐ 4.7",desc:"The juicy aloo tikki topped with special sauce, tomato, cucumber & onion relish.",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=800"},
+{id:25,name:"Cheese Burger",price:100,category:"burger",rating:"⭐ 4.8",desc:"Tangy aloo patty, American cheese, pink sauce, tomato, onion relish & cheddar cheese slice.",img:"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800"},
+{id:26,name:"Masala Chilli Burger",price:100,category:"burger",rating:"⭐ 4.7",desc:"Crispy vegetable patty topped with spicy cocktail mayo, onion and cheese sauce.",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"},
+{id:27,name:"Mac & Cheese Burger",price:140,category:"burger",rating:"⭐ 4.9",desc:"In house mac & cheese patty, creamy mayo, onion and cheese sauce.",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=800"},
+{id:28,name:"Spicy Paneer Burger",price:150,category:"burger",rating:"⭐ 4.9",desc:"Crispy paneer patty sandwich between soft black bun, filled with in house special mayo and spicy mayo with a crisp of onion.",img:"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800"},
+{id:29,name:"Arrabbiata Pasta",price:200,category:"pasta",rating:"⭐ 4.7",desc:"Pasta cooked in hot and spicy red sauce flavored with mix herbs and cheese.",img:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"},
+{id:30,name:"Pepper Mushroom Alfredo Pasta",price:200,category:"pasta",rating:"⭐ 4.8",desc:"Button mushroom tossed with vegetables and in house creamy rich white sauce.",img:"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800"},
+{id:31,name:"White Sauce Pasta",price:210,category:"pasta",rating:"⭐ 4.7",desc:"Pasta tossed with vegetables in 5 spice and cheesy white sauce.",img:"https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800"},
+{id:32,name:"Pink Sauce Pasta",price:220,category:"pasta",rating:"⭐ 4.8",desc:"Pasta in a blend of tomato and cream sauce.",img:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"},
+{id:33,name:"Creamy Peri Peri Pasta",price:200,category:"pasta",rating:"⭐ 4.7",desc:"A simple yet delicious combination of fresh garlic, olive oil, and parmesan cheese tossed with freshly cooked penne pasta.",img:"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800"},
+{id:34,name:"Cheesy Baked Pasta",price:230,category:"pasta",rating:"⭐ 4.9",desc:"This cheesy baked pasta is a combination of penne, creamy white and marinara sauce.",img:"https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=800"},
+{id:35,name:"Dry Manchurian",price:150,category:"chinese",rating:"⭐ 4.7",desc:"Perfect combination of vegetable balls tossed in schezwan sauce topped with spring onions.",img:"https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800"},
+{id:36,name:"Burnt Garlic Chilli Paneer",price:220,category:"chinese",rating:"⭐ 4.9",desc:"Crispy batter coated paneer tossed with garlic and vegetables.",img:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800"},
+{id:37,name:"Spring Roll",price:200,category:"chinese",rating:"⭐ 4.6",desc:"Noodles, vegetables, paneer in spicy sauce wrapped in thin and crispy flour sheet.",img:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800"},
+{id:38,name:"Singaporean Noodles",price:180,category:"chinese",rating:"⭐ 4.7",desc:"Stir-fried noodles tossed with veggies & cinnamon.",img:"https://images.unsplash.com/photo-1552611052-33e04de081de?w=800"},
+{id:39,name:"Paneer Schezwan Noodles",price:190,category:"chinese",rating:"⭐ 4.8",desc:"Noodles tossed with veggies, paneer & pepper corn.",img:"https://images.unsplash.com/photo-1552611052-33e04de081de?w=800"},
+{id:40,name:"Desi Chowmein",price:170,category:"chinese",rating:"⭐ 4.6",desc:"Noodles tossed with veggies & chowmein masala.",img:"https://images.unsplash.com/photo-1552611052-33e04de081de?w=800"},
+{id:41,name:"Masala Paneer Chowmein",price:190,category:"chinese",rating:"⭐ 4.7",desc:"Noodles tossed with veggies & chowmein masala.",img:"https://images.unsplash.com/photo-1552611052-33e04de081de?w=800"},
+{id:42,name:"Hakka Noodles",price:170,category:"chinese",rating:"⭐ 4.5",desc:"The classic non spicy noodles tossed with minimal sauces and vegetables.",img:"https://images.unsplash.com/photo-1552611052-33e04de081de?w=800"},
+{id:43,name:"Plain Salted Fries",price:120,category:"fries",rating:"⭐ 4.5",desc:"Crispy fries seasoned with white salt and served with garlic sauce.",img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=800"},
+{id:44,name:"Spicy Habanero Fries",price:150,category:"fries",rating:"⭐ 4.7",desc:"Crispy fries seasoned with special masala and served with garlic sauce.",img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800"},
+{id:45,name:"Peri Peri Fries",price:150,category:"fries",rating:"⭐ 4.8",desc:"Crispy fries seasoned with special piri piri flavor and served with garlic sauce.",img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=800"},
+{id:46,name:"Magic Masala Fries",price:150,category:"fries",rating:"⭐ 4.7",desc:"Crispy fries seasoned with all time favourite magic masala and served with garlic sauce.",img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800"},
+{id:47,name:"Mexican Cheese Fries",price:150,category:"fries",rating:"⭐ 4.8",desc:"Crispy fries seasoned with special masala and served with garlic sauce.",img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=800"},
+{id:48,name:"Cheesy Garlic Bread",price:120,category:"garlic-bread",rating:"⭐ 4.6",desc:"Topped with mozzarella and garlic butter.",img:"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800"},
+{id:49,name:"Paneer Cheese Garlic Bread",price:130,category:"garlic-bread",rating:"⭐ 4.7",desc:"Topped with mozzarella and garlic butter.",img:"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800"},
+{id:50,name:"Tandoori Paneer Garlic Bread",price:150,category:"garlic-bread",rating:"⭐ 4.8",desc:"Topped with mozzarella and garlic butter.",img:"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800"},
+{id:51,name:"Spicy Veggie Wrap",price:130,category:"rolls",rating:"⭐ 4.6",desc:"Multipurpose flour bread wrapped with tangy and spicy sauce, veggie cutlet and veggies.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:52,name:"Spicy Paneer Wrap",price:150,category:"rolls",rating:"⭐ 4.7",desc:"Multipurpose flour bread wrapped with tangy and spicy paneer.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:53,name:"Crispy Paneer Wrap",price:170,category:"rolls",rating:"⭐ 4.8",desc:"Juicy paneer patty sandwiched in multipurpose flour bread with special mayo.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:54,name:"Manchurian Wrap",price:150,category:"rolls",rating:"⭐ 4.7",desc:"In tortilla wrapped with manchurian balls, Chinese masala, spicy mayo and cheese sauce. Pan grilled till perfection.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:55,name:"Mix Veg Roll",price:150,category:"rolls",rating:"⭐ 4.6",desc:"Multipurpose flour bread wrapped with tangy potato patty, spicy sauces and spicy paneer.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:56,name:"Mac & Cheese Roll",price:170,category:"rolls",rating:"⭐ 4.8",desc:"Multipurpose flour bread wrapped with in house mac & cheese patty, spicy sauces and vegetable.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:57,name:"Afghani Soya Chaap Roll",price:150,category:"rolls",rating:"⭐ 4.7",desc:"Multipurpose flour bread wrapped with tandoori soya chaap, cream, mint sauce and vegetable.",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800"},
+{id:58,name:"Tandoori Soya Chaap Tikka",price:200,category:"tandoor",rating:"⭐ 4.8",desc:"Soya chaap marinated with in-house masala & curd and cooked over charcoal.",img:"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800"},
+{id:59,name:"Afghani Soya Chaap Tikka",price:200,category:"tandoor",rating:"⭐ 4.9",desc:"Soya chaap marinated with in-house masala & curd, cream and cooked over charcoal.",img:"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800"},
+{id:60,name:"Maggi Masala",price:120,category:"maggi",rating:"⭐ 4.5",desc:"Maggi cooked in regular masala & butter.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:61,name:"Schezwan Maggi",price:130,category:"maggi",rating:"⭐ 4.7",desc:"Masala maggi cooked, tossed in hot schezwan sauce and topped with spring onion.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:62,name:"Piri Maggi",price:130,category:"maggi",rating:"⭐ 4.6",desc:"Masala maggi cooked in spicy Nandos African piri sauce and magic masala.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:63,name:"Desi Tadka Maggi",price:130,category:"maggi",rating:"⭐ 4.7",desc:"Masala maggi cooked and topped with garlic and dried red chilly tadka.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:64,name:"Maggi Angelio",price:140,category:"maggi",rating:"⭐ 4.6",desc:"Maggi cooked in butter, garlic and Italian herbs.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:65,name:"Chatpata Maggi",price:160,category:"maggi",rating:"⭐ 4.8",desc:"Maggi cooked with veggies and mix of spicy / tangy sauces.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{id:66,name:"Jodhpuri Maggi",price:160,category:"maggi",rating:"⭐ 4.9",desc:"The real fusion with in house masala including onion, garlic, potato and tomato, tossed in aromatic local spices.",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"}
+];
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function updateCount(){
+const c = cart.reduce((t,i)=>t+i.qty,0);
+document.getElementById('cart-count').innerText = c;
+document.getElementById('cart-float').innerText = c;
+}
+
+function addItem(id){
+const item = menuItems.find(i=>i.id===id);
+let existing = cart.find(i=>i.id===id);
+if(existing){existing.qty++;}
+else{cart.push({id:item.id,name:item.name,price:item.price,qty:1});}
+localStorage.setItem('cart',JSON.stringify(cart));
+updateCount();
+showToast(`✅ ${item.name} added!`);
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2000);
+}
+
+function shareItem(id){
+const item = menuItems.find(i=>i.id===id);
+const text = `Check out ${item.name} at Hot Wheels Veggie Fusion! Only ₹${item.price}. 🔥`;
+if(navigator.share){
+navigator.share({title:'Hot Wheels Veggie Fusion',text:text,url:window.location.href});
+} else {
+navigator.clipboard.writeText(text + ' ' + window.location.href);
+showToast('📋 Link copied!');
+}
+}
+
+function renderMenu(items){
+const grid = document.getElementById('grid');
+document.getElementById('item-count').innerText = `Showing ${items.length} item${items.length!==1?'s':''}`;
+if(items.length===0){
+grid.innerHTML = '<div class="no-results"><span>😕</span>No items found. Try a different search!</div>';
+return;
+}
+grid.innerHTML = items.map(item=>`
+<div class="card" data-category="${item.category}">
+<img src="${item.img}" alt="${item.name}" loading="lazy">
+<div class="content">
+<h3>${item.name} ${item.rating}</h3>
+<p class="desc">${item.desc}</p>
+<div class="price-row">
+<div class="price">₹${item.price}</div>
+<div style="display:flex;gap:8px">
+<button class="add" onclick="addItem(${item.id})" style="flex:1">➕ Add</button>
+<button class="add" onclick="shareItem(${item.id})" style="padding:10px 12px;background:var(--card-bg);border:1px solid rgba(255,255,255,.15);color:var(--neon-cyan)" title="Share">📤</button>
+</div>
+</div>
+</div>
+</div>
+`).join('');
+}
+
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('keyup',function(){
+const v = this.value.toLowerCase();
+const filtered = menuItems.filter(item=>item.name.toLowerCase().includes(v)||item.desc.toLowerCase().includes(v)||item.category.toLowerCase().includes(v));
+renderMenu(filtered);
+if(v===''){
+document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+document.querySelector('.categories button[data-cat="all"]').classList.add('active');
+}
+});
+
+let currentCat = 'all';
+document.querySelectorAll('.categories button').forEach(btn=>{
+btn.addEventListener('click',()=>{
+document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+currentCat = btn.dataset.cat;
+searchInput.value = '';
+if(currentCat==='all'){renderMenu(menuItems);}
+else{renderMenu(menuItems.filter(i=>i.category===currentCat));}
+});
+});
+
+renderMenu(menuItems);
+updateCount();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

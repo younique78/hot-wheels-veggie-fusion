@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Hot Wheels Veggie Fusion 🔧</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);--danger:#ff3333;--success:#00ff88;
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.1;z-index:-1;pointer-events:none}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;right:-100px}
+
+nav{position:sticky;top:15px;width:92%;max-width:1200px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.hero{width:92%;max-width:1200px;margin:30px auto;text-align:center}
+.hero h1{font-size:36px;font-weight:900}
+.hero h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{opacity:.6;font-size:14px;margin-top:6px}
+
+/* Stats Cards */
+.stats-row{width:92%;max-width:1200px;margin:25px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.stat-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;text-align:center;transition:.3s;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));opacity:.6}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(255,0,110,.3)}
+.stat-card .num{font-size:36px;font-weight:800;margin-bottom:4px}
+.stat-card .num.pink{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .num.cyan{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .num.yellow{background:linear-gradient(90deg,var(--neon-yellow),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .label{font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:1px}
+
+/* Controls */
+.controls{width:92%;max-width:1200px;margin:25px auto;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.controls input,.controls select{padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;font-size:14px;outline:none;transition:.3s}
+.controls input:focus,.controls select:focus{border-color:var(--neon-pink)}
+.controls input::placeholder{color:rgba(255,255,255,.3)}
+.controls button{padding:12px 22px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;font-weight:700;font-size:13px;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+.controls button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,0,110,.5)}
+.controls button.secondary{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);box-shadow:none}
+.controls button.secondary:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+
+/* Table */
+.table-wrap{width:92%;max-width:1200px;margin:20px auto;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden}
+.table-wrap::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+
+.table-header{display:grid;grid-template-columns:50px 2fr 1fr 1fr 100px 80px;gap:12px;padding:16px 20px;background:rgba(255,255,255,.03);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.5}
+.table-row{display:grid;grid-template-columns:50px 2fr 1fr 1fr 100px 80px;gap:12px;padding:14px 20px;align-items:center;border-top:1px solid rgba(255,255,255,.05);transition:.3s;font-size:14px}
+.table-row:hover{background:rgba(255,255,255,.03)}
+.table-row.out{opacity:.4}
+.table-row .id{opacity:.4;font-size:12px;font-weight:600}
+.table-row .name{font-weight:600}
+.table-row .cat{font-size:12px;opacity:.6}
+.table-row .price{font-weight:700;color:var(--neon-yellow)}
+.table-row .price input{width:80px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:white;font-size:14px;font-weight:700;text-align:center}
+
+.toggle-btn{padding:8px 14px;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;transition:.3s}
+.toggle-btn.in{background:rgba(0,255,136,.15);color:var(--success);border:1px solid rgba(0,255,136,.3)}
+.toggle-btn.out{background:rgba(255,51,51,.15);color:var(--danger);border:1px solid rgba(255,51,51,.3)}
+.toggle-btn:hover{transform:scale(1.05)}
+
+.save-btn{padding:6px 14px;border:none;border-radius:8px;background:rgba(255,255,255,.08);color:white;font-size:12px;font-weight:600;cursor:pointer;transition:.3s}
+.save-btn:hover{background:var(--neon-pink);color:white}
+
+/* Toast */
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:768px){
+.hero h1{font-size:26px}
+.table-header,.table-row{grid-template-columns:40px 1fr 80px 70px;gap:8px}
+.table-header .cat,.table-header .price-h,.table-row .cat{display:none}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Admin</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<section class="hero">
+<h1>Admin <span>Dashboard</span> 🔧</h1>
+<p>Manage your menu, prices & availability. Changes save locally.</p>
+</section>
+
+<div class="stats-row">
+<div class="stat-card">
+<div class="num pink" id="statTotal">66</div>
+<div class="label">Total Items</div>
+</div>
+<div class="stat-card">
+<div class="num cyan" id="statAvailable">66</div>
+<div class="label">Available</div>
+</div>
+<div class="stat-card">
+<div class="num yellow" id="statOut">0</div>
+<div class="label">Out of Stock</div>
+</div>
+<div class="stat-card">
+<div class="num pink" id="statCategories">10</div>
+<div class="label">Categories</div>
+</div>
+</div>
+
+<div class="controls">
+<input type="text" id="searchAdmin" placeholder="🔍 Search items...">
+<select id="filterCat">
+<option value="all">All Categories</option>
+<option value="turkish-pizza">Turkish Pizza</option>
+<option value="momos">Momos</option>
+<option value="burger">Black Burger</option>
+<option value="pasta">Pasta</option>
+<option value="chinese">Chinese Fusion</option>
+<option value="fries">Fries</option>
+<option value="garlic-bread">Garlic Bread</option>
+<option value="rolls">Rolls & Wraps</option>
+<option value="tandoor">Tandoor Snacks</option>
+<option value="maggi">Fusion Maggi</option>
+</select>
+<button onclick="saveAll()">💾 Save All Changes</button>
+<button class="secondary" onclick="resetAll()">↺ Reset to Default</button>
+</div>
+
+<div class="table-wrap">
+<div class="table-header">
+<div class="id-h">ID</div>
+<div class="name-h">Item Name</div>
+<div class="cat-h">Category</div>
+<div class="price-h">Price (₹)</div>
+<div class="status-h">Status</div>
+<div class="act-h">Save</div>
+</div>
+<div id="adminTable"></div>
+</div>
+
+<div class="toast" id="toast">✅ Saved!</div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+const defaultMenu = [
+{id:1,name:"Veggie Paradise",price:190,category:"turkish-pizza",available:true},
+{id:2,name:"Desi Stuff",price:220,category:"turkish-pizza",available:true},
+{id:3,name:"Tandoori Veg",price:210,category:"turkish-pizza",available:true},
+{id:4,name:"Paneer Tikka",price:220,category:"turkish-pizza",available:true},
+{id:5,name:"Margherita Pizza",price:190,category:"turkish-pizza",available:true},
+{id:6,name:"Peppy Paneer",price:240,category:"turkish-pizza",available:true},
+{id:7,name:"Hot & Spicy Paneer",price:240,category:"turkish-pizza",available:true},
+{id:8,name:"Hot Wheels Special",price:230,category:"turkish-pizza",available:true},
+{id:9,name:"Three Cheese",price:240,category:"turkish-pizza",available:true},
+{id:10,name:"Paneer Korma",price:230,category:"turkish-pizza",available:true},
+{id:11,name:"Paneer Makhni",price:240,category:"turkish-pizza",available:true},
+{id:12,name:"Smoked Paneer",price:240,category:"turkish-pizza",available:true},
+{id:13,name:"Soya Pepperoni",price:220,category:"turkish-pizza",available:true},
+{id:14,name:"Steamed Momos",price:100,category:"momos",available:true},
+{id:15,name:"Paneer Steamed Momos",price:130,category:"momos",available:true},
+{id:16,name:"Fried Momos",price:140,category:"momos",available:true},
+{id:17,name:"Paneer Fried Momos",price:160,category:"momos",available:true},
+{id:18,name:"Kurkure Momos",price:170,category:"momos",available:true},
+{id:19,name:"Tawa Momos",price:200,category:"momos",available:true},
+{id:20,name:"Tandoori Momos",price:210,category:"momos",available:true},
+{id:21,name:"Creamy Momos",price:210,category:"momos",available:true},
+{id:22,name:"Chilly Garlic Momos",price:200,category:"momos",available:true},
+{id:23,name:"The Original Aloo Tikki",price:80,category:"burger",available:true},
+{id:24,name:"The Special Burger",price:90,category:"burger",available:true},
+{id:25,name:"Cheese Burger",price:100,category:"burger",available:true},
+{id:26,name:"Masala Chilli Burger",price:100,category:"burger",available:true},
+{id:27,name:"Mac & Cheese Burger",price:140,category:"burger",available:true},
+{id:28,name:"Spicy Paneer Burger",price:150,category:"burger",available:true},
+{id:29,name:"Arrabbiata Pasta",price:200,category:"pasta",available:true},
+{id:30,name:"Pepper Mushroom Alfredo Pasta",price:200,category:"pasta",available:true},
+{id:31,name:"White Sauce Pasta",price:210,category:"pasta",available:true},
+{id:32,name:"Pink Sauce Pasta",price:220,category:"pasta",available:true},
+{id:33,name:"Creamy Peri Peri Pasta",price:200,category:"pasta",available:true},
+{id:34,name:"Cheesy Baked Pasta",price:230,category:"pasta",available:true},
+{id:35,name:"Dry Manchurian",price:150,category:"chinese",available:true},
+{id:36,name:"Burnt Garlic Chilli Paneer",price:220,category:"chinese",available:true},
+{id:37,name:"Spring Roll",price:200,category:"chinese",available:true},
+{id:38,name:"Singaporean Noodles",price:180,category:"chinese",available:true},
+{id:39,name:"Paneer Schezwan Noodles",price:190,category:"chinese",available:true},
+{id:40,name:"Desi Chowmein",price:170,category:"chinese",available:true},
+{id:41,name:"Masala Paneer Chowmein",price:190,category:"chinese",available:true},
+{id:42,name:"Hakka Noodles",price:170,category:"chinese",available:true},
+{id:43,name:"Plain Salted Fries",price:120,category:"fries",available:true},
+{id:44,name:"Spicy Habanero Fries",price:150,category:"fries",available:true},
+{id:45,name:"Peri Peri Fries",price:150,category:"fries",available:true},
+{id:46,name:"Magic Masala Fries",price:150,category:"fries",available:true},
+{id:47,name:"Mexican Cheese Fries",price:150,category:"fries",available:true},
+{id:48,name:"Cheesy Garlic Bread",price:120,category:"garlic-bread",available:true},
+{id:49,name:"Paneer Cheese Garlic Bread",price:130,category:"garlic-bread",available:true},
+{id:50,name:"Tandoori Paneer Garlic Bread",price:150,category:"garlic-bread",available:true},
+{id:51,name:"Spicy Veggie Wrap",price:130,category:"rolls",available:true},
+{id:52,name:"Spicy Paneer Wrap",price:150,category:"rolls",available:true},
+{id:53,name:"Crispy Paneer Wrap",price:170,category:"rolls",available:true},
+{id:54,name:"Manchurian Wrap",price:150,category:"rolls",available:true},
+{id:55,name:"Mix Veg Roll",price:150,category:"rolls",available:true},
+{id:56,name:"Mac & Cheese Roll",price:170,category:"rolls",available:true},
+{id:57,name:"Afghani Soya Chaap Roll",price:150,category:"rolls",available:true},
+{id:58,name:"Tandoori Soya Chaap Tikka",price:200,category:"tandoor",available:true},
+{id:59,name:"Afghani Soya Chaap Tikka",price:200,category:"tandoor",available:true},
+{id:60,name:"Maggi Masala",price:120,category:"maggi",available:true},
+{id:61,name:"Schezwan Maggi",price:130,category:"maggi",available:true},
+{id:62,name:"Piri Maggi",price:130,category:"maggi",available:true},
+{id:63,name:"Desi Tadka Maggi",price:130,category:"maggi",available:true},
+{id:64,name:"Maggi Angelio",price:140,category:"maggi",available:true},
+{id:65,name:"Chatpata Maggi",price:160,category:"maggi",available:true},
+{id:66,name:"Jodhpuri Maggi",price:160,category:"maggi",available:true}
+];
+
+let menu = JSON.parse(localStorage.getItem('hw_admin_menu')) || JSON.parse(JSON.stringify(defaultMenu));
+
+function catLabel(c){
+const map={"turkish-pizza":"Turkish Pizza","momos":"Momos","burger":"Black Burger","pasta":"Pasta","chinese":"Chinese Fusion","fries":"Fries","garlic-bread":"Garlic Bread","rolls":"Rolls & Wraps","tandoor":"Tandoor Snacks","maggi":"Fusion Maggi"};
+return map[c]||c;
+}
+
+function updateStats(){
+document.getElementById('statTotal').innerText = menu.length;
+document.getElementById('statAvailable').innerText = menu.filter(i=>i.available).length;
+document.getElementById('statOut').innerText = menu.filter(i=>!i.available).length;
+}
+
+function renderTable(){
+const container = document.getElementById('adminTable');
+const search = document.getElementById('searchAdmin').value.toLowerCase();
+const catFilter = document.getElementById('filterCat').value;
+
+const filtered = menu.filter(item=>{
+const matchSearch = item.name.toLowerCase().includes(search);
+const matchCat = catFilter==='all' || item.category===catFilter;
+return matchSearch && matchCat;
+});
+
+container.innerHTML = filtered.map(item=>`
+<div class="table-row ${item.available?'':'out'}" data-id="${item.id}">
+<div class="id">#${item.id}</div>
+<div class="name">${item.name}</div>
+<div class="cat">${catLabel(item.category)}</div>
+<div class="price"><input type="number" value="${item.price}" onchange="updatePrice(${item.id},this.value)" min="0"></div>
+<div><button class="toggle-btn ${item.available?'in':'out'}" onclick="toggleStatus(${item.id})">${item.available?'✅ In Stock':'❌ Out'}</button></div>
+<div><button class="save-btn" onclick="saveItem(${item.id})">💾</button></div>
+</div>
+`).join('');
+
+updateStats();
+}
+
+function updatePrice(id,val){
+const item = menu.find(i=>i.id===id);
+if(item) item.price = parseInt(val)||0;
+}
+
+function toggleStatus(id){
+const item = menu.find(i=>i.id===id);
+if(item){
+item.available = !item.available;
+renderTable();
+showToast(item.available?'✅ Marked In Stock':'❌ Marked Out of Stock');
+}
+}
+
+function saveItem(id){
+localStorage.setItem('hw_admin_menu', JSON.stringify(menu));
+showToast('💾 Saved!');
+}
+
+function saveAll(){
+localStorage.setItem('hw_admin_menu', JSON.stringify(menu));
+showToast('💾 All changes saved!');
+}
+
+function resetAll(){
+if(confirm('Reset all items to default prices and availability?')){
+menu = JSON.parse(JSON.stringify(defaultMenu));
+localStorage.setItem('hw_admin_menu', JSON.stringify(menu));
+renderTable();
+showToast('↺ Reset complete');
+}
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2000);
+}
+
+document.getElementById('searchAdmin').addEventListener('keyup', renderTable);
+document.getElementById('filterCat').addEventListener('change', renderTable);
+
+renderTable();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

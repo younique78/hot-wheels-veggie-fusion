@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Order | Hot Wheels Veggie Fusion 📦</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.1;z-index:-1;pointer-events:none}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;left:-100px}
+.blob2{width:350px;height:350px;background:var(--neon-cyan);bottom:-80px;right:-80px}
+
+nav{position:sticky;top:15px;width:92%;max-width:800px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.container{max-width:700px;margin:auto;padding:20px}
+
+h1{text-align:center;font-size:32px;font-weight:900;margin-bottom:8px}
+h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{text-align:center;opacity:.6;font-size:14px;margin-bottom:35px}
+
+/* Order Lookup */
+.lookup{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:30px;margin-bottom:25px;position:relative;overflow:hidden}
+.lookup::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+.lookup h2{font-size:18px;margin-bottom:16px;font-weight:700}
+.lookup-row{display:flex;gap:12px}
+.lookup input{flex:1;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;font-size:15px;outline:none;transition:.3s}
+.lookup input:focus{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.15)}
+.lookup input::placeholder{color:rgba(255,255,255,.3)}
+.lookup button{padding:14px 24px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;font-weight:700;font-size:14px;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+.lookup button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,0,110,.6)}
+
+/* Timeline */
+.timeline{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:30px;display:none;position:relative;overflow:hidden}
+.timeline::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+.timeline.active{display:block;animation:fadeUp .5s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.timeline h2{font-size:18px;margin-bottom:25px;font-weight:700}
+.timeline h2 span{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.step{display:flex;gap:18px;margin-bottom:22px;position:relative}
+.step:last-child{margin-bottom:0}
+.step::before{content:'';position:absolute;left:17px;top:40px;bottom:-22px;width:2px;background:rgba(255,255,255,.08)}
+.step:last-child::before{display:none}
+
+.step-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:2px solid rgba(255,255,255,.1);background:var(--card-bg);z-index:1;transition:.4s}
+.step.done .step-icon{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-color:transparent;box-shadow:0 0 15px rgba(255,0,110,.4)}
+.step.active .step-icon{background:linear-gradient(135deg,var(--neon-cyan),var(--neon-lime));border-color:transparent;box-shadow:0 0 15px rgba(0,212,255,.4);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 15px rgba(0,212,255,.4)}50%{box-shadow:0 0 25px rgba(0,212,255,.7)}}
+
+.step-content{flex:1;padding-top:6px}
+.step-title{font-size:15px;font-weight:700;margin-bottom:3px}
+.step-desc{font-size:13px;opacity:.6}
+.step-time{font-size:11px;opacity:.4;margin-top:4px}
+
+/* Order Summary */
+.order-summary{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.order-item{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;opacity:.85}
+.order-item.total{font-weight:700;font-size:16px;border-top:1px solid rgba(255,255,255,.08);margin-top:8px;padding-top:12px;opacity:1}
+.order-item.total span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:18px}
+
+/* No orders */
+.no-order{text-align:center;padding:50px 20px}
+.no-order span{font-size:55px;display:block;margin-bottom:15px}
+.no-order h3{font-size:18px;margin-bottom:8px}
+.no-order p{opacity:.6;font-size:14px;margin-bottom:20px}
+.no-order a{color:var(--neon-pink);text-decoration:none;font-weight:700}
+
+/* Recent Orders */
+.recent-orders{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:25px;margin-top:25px;position:relative;overflow:hidden}
+.recent-orders::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));opacity:.6}
+.recent-orders h2{font-size:18px;margin-bottom:16px;font-weight:700}
+.recent-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;transition:.3s}
+.recent-row:hover{padding-left:8px;color:var(--neon-pink)}
+.recent-row:last-child{border-bottom:none}
+.recent-info{font-size:14px}
+.recent-info .id{opacity:.5;font-size:12px}
+.recent-status{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.recent-status.preparing{background:rgba(255,252,0,.1);color:var(--neon-yellow);border:1px solid rgba(255,252,0,.2)}
+.recent-status.ready{background:rgba(0,255,136,.1);color:var(--neon-lime);border:1px solid rgba(0,255,136,.2)}
+.recent-status.delivered{background:rgba(0,212,255,.1);color:var(--neon-cyan);border:1px solid rgba(0,212,255,.2)}
+
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:600px){
+h1{font-size:24px}
+.lookup-row{flex-direction:column}
+.step::before{left:16px}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+
+<h1>Track Your <span>Order</span> 📦</h1>
+<p class="subtitle">Enter your order ID or mobile number to check status</p>
+
+<div class="lookup">
+<h2>🔍 Lookup Order</h2>
+<div class="lookup-row">
+<input type="text" id="orderInput" placeholder="Enter Order ID or Mobile Number">
+<button onclick="trackOrder()">Track</button>
+</div>
+</div>
+
+<div class="timeline" id="timeline">
+<h2>Order <span>#HW-7842</span></h2>
+
+<div class="step done">
+<div class="step-icon">✅</div>
+<div class="step-content">
+<div class="step-title">Order Received</div>
+<div class="step-desc">We've got your order and it's looking fire 🔥</div>
+<div class="step-time">Today, 6:42 PM</div>
+</div>
+</div>
+
+<div class="step done">
+<div class="step-icon">👨‍🍳</div>
+<div class="step-content">
+<div class="step-title">Preparing</div>
+<div class="step-desc">Chef is cooking your food fresh. 15-20 mins ETA</div>
+<div class="step-time">Today, 6:43 PM</div>
+</div>
+</div>
+
+<div class="step active">
+<div class="step-icon">🔥</div>
+<div class="step-content">
+<div class="step-title">In the Oven</div>
+<div class="step-desc">Your Turkish Pizza is getting that perfect bake</div>
+<div class="step-time">Today, 6:52 PM</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-icon">🛵</div>
+<div class="step-content">
+<div class="step-title">Out for Delivery</div>
+<div class="step-desc">Rider is on the way with your hot order!</div>
+<div class="step-time">--</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-icon">🎉</div>
+<div class="step-content">
+<div class="step-title">Delivered</div>
+<div class="step-desc">Enjoy your meal! Rate us on reviews page 💬</div>
+<div class="step-time">--</div>
+</div>
+</div>
+
+<div class="order-summary">
+<div class="order-item"><span>Hot Wheels Special Pizza x 1</span><span>₹230</span></div>
+<div class="order-item"><span>Tandoori Momos x 1</span><span>₹210</span></div>
+<div class="order-item"><span>Peri Peri Fries x 1</span><span>₹150</span></div>
+<div class="order-item total"><span>Total</span><span>₹590</span></div>
+</div>
+</div>
+
+<div class="no-order" id="noOrder" style="display:none;">
+<span>🔍</span>
+<h3>No order found</h3>
+<p>We couldn't find an order with that ID. Try your mobile number or <a href="order.html">place a new order</a>.</p>
+</div>
+
+<div class="recent-orders" id="recentOrders">
+<h2>🕐 Recent Orders</h2>
+<div id="recentList"></div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+// Demo recent orders
+const recentOrders = [
+{id:'HW-7842',items:'Hot Wheels Special Pizza + 2 more',status:'preparing',time:'Today, 6:42 PM',total:'₹590'},
+{id:'HW-7721',items:'Tandoori Momos + Peri Peri Fries',status:'delivered',time:'Yesterday, 7:15 PM',total:'₹360'},
+{id:'HW-7654',items:'Pink Sauce Pasta + Garlic Bread',status:'delivered',time:'2 days ago, 8:30 PM',total:'₹340'}
+];
+
+function renderRecent(){
+const list = document.getElementById('recentList');
+list.innerHTML = recentOrders.map(o=>`
+<div class="recent-row" onclick="loadOrder('${o.id}')">
+<div class="recent-info">
+<div style="font-weight:700">${o.id}</div>
+<div class="id">${o.items} · ${o.time}</div>
+</div>
+<span class="recent-status ${o.status}">${o.status.toUpperCase()}</span>
+</div>
+`).join('');
+}
+
+function trackOrder(){
+const val = document.getElementById('orderInput').value.trim();
+if(!val){showToast('Enter an Order ID or mobile number');return;}
+
+// Simulate lookup
+const found = recentOrders.find(o=>o.id.toLowerCase()===val.toLowerCase());
+if(found || val.length>=10){
+document.getElementById('timeline').classList.add('active');
+document.getElementById('noOrder').style.display='none';
+showToast('✅ Order found!');
+} else {
+document.getElementById('timeline').classList.remove('active');
+document.getElementById('noOrder').style.display='block';
+}
+}
+
+function loadOrder(id){
+document.getElementById('orderInput').value = id;
+trackOrder();
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+renderRecent();
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>

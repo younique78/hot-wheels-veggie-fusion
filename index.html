@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Wheels Veggie Fusion | Slay Your Cravings 🔥</title>
+<meta name="description" content="Hot Wheels Veggie Fusion - The most aesthetic veg cafe in Jodhpur. 66+ items that absolutely slap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+:root{
+--neon-pink:#ff006e;
+--neon-cyan:#00d4ff;
+--neon-lime:#39ff14;
+--neon-orange:#ff8a00;
+--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;
+--card-bg:rgba(255,255,255,0.04);
+--border-glow:rgba(255,0,110,0.3);
+}
+
+body{
+background:var(--dark-bg);
+min-height:100vh;
+overflow-x:hidden;
+color:white;
+}
+
+/* Animated Background Blobs */
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.25;z-index:-1;animation:float 8s ease-in-out infinite}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;left:-100px;animation-delay:0s}
+.blob2{width:350px;height:350px;background:var(--neon-cyan);bottom:-80px;right:-80px;animation-delay:2s}
+.blob3{width:300px;height:300px;background:var(--neon-lime);top:40%;left:60%;animation-delay:4s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-30px) scale(1.1)}}
+
+/* Navbar */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:92%;max-width:1200px;padding:14px 28px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800}
+.logo img{height:42px;width:42px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+nav ul{display:flex;gap:28px;list-style:none;align-items:center}
+nav a{text-decoration:none;color:white;font-weight:600;transition:.3s;font-size:14px;position:relative}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));transition:.3s;border-radius:2px}
+nav a:hover::after{width:100%}
+nav a:hover{color:var(--neon-pink)}
+.cart-badge{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px}
+.hero-card{max-width:850px;text-align:center;padding:50px 40px;border-radius:35px;background:var(--card-bg);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow),var(--neon-lime),var(--neon-cyan),var(--neon-pink));background-size:300% 100%;animation:shimmer 3s linear infinite}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+.hero-logo{width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:20px;border:3px solid var(--neon-pink);box-shadow:0 0 30px rgba(255,0,110,.5);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(255,0,110,.5)}50%{box-shadow:0 0 50px rgba(255,0,110,.8)}}
+
+.hero h1{font-size:52px;margin-bottom:15px;font-weight:900;line-height:1.1}
+.gradient-text{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:17px;opacity:.8;margin-bottom:35px;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto}
+
+.buttons{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.btn{padding:16px 36px;border-radius:50px;font-size:15px;text-decoration:none;transition:.35s;border:none;cursor:pointer;font-weight:700;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.5s}
+.btn:hover::before{left:100%}
+
+.primary{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;box-shadow:0 8px 25px rgba(255,0,110,.4)}
+.primary:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(255,0,110,.6)}
+.secondary{background:transparent;border:2px solid rgba(255,255,255,.2);color:white}
+.secondary:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-4px);box-shadow:0 0 20px rgba(0,212,255,.2)}
+
+/* Stats Bar */
+.stats-bar{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:30px;padding-top:25px;border-top:1px solid rgba(255,255,255,.08)}
+.stat{text-align:center}
+.stat-num{font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:12px;opacity:.7;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* Sections */
+.section{padding:80px 6%}
+.title{font-size:38px;margin-bottom:45px;text-align:center;font-weight:800}
+.title span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Best Sellers - Bento Grid */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:auto}
+.bento .card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:20px;transition:.4s;position:relative;overflow:hidden}
+.bento .card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(180deg,transparent,rgba(255,0,110,.15));transition:.4s}
+.bento .card:hover::after{height:100%}
+.bento .card:hover{transform:translateY(-8px) rotate(-1deg);border-color:rgba(255,0,110,.3);box-shadow:0 20px 40px rgba(255,0,110,.15)}
+.bento .card:nth-child(2):hover{transform:translateY(-8px) rotate(1deg)}
+.bento .card:nth-child(4):hover{transform:translateY(-8deg) rotate(1deg)}
+.bento .card img{width:100%;height:150px;object-fit:cover;border-radius:14px;margin-bottom:14px}
+.bento .card h3{margin-bottom:6px;font-size:16px;font-weight:700}
+.bento .card p{opacity:.7;font-size:13px;line-height:1.5}
+.price-tag{display:inline-block;padding:6px 14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-radius:20px;font-size:14px;font-weight:700;margin-top:12px;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+
+.bento .card:nth-child(1){grid-column:span 2;grid-row:span 2}
+.bento .card:nth-child(1) img{height:220px}
+.bento .card:nth-child(1) h3{font-size:22px}
+
+/* Category Pills */
+.pills{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+.pill{padding:10px 22px;background:var(--card-bg);border:1px solid rgba(255,255,255,.1);border-radius:30px;font-size:13px;font-weight:600;transition:.3s;cursor:pointer}
+.pill:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,212,255,.15)}
+
+/* About */
+.about{background:var(--card-bg);padding:45px;border-radius:28px;border:1px solid rgba(255,255,255,.08);line-height:2;position:relative;overflow:hidden}
+.about::before{content:'';position:absolute;top:-50%;right:-50%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,0,110,.15),transparent 70%);pointer-events:none}
+.about h2{margin-bottom:16px;font-size:24px;font-weight:800}
+.about strong{color:var(--neon-pink)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:18px}
+.contact-item{display:flex;align-items:center;gap:12px;background:var(--card-bg);padding:14px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.06);transition:.3s}
+.contact-item:hover{border-color:rgba(255,0,110,.3);transform:translateY(-2px)}
+.contact-item span{font-size:22px}
+
+.map-grid img{width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.1);transition:.3s}
+.map-grid img:hover{transform:scale(1.02);border-color:rgba(255,0,110,.4)}
+
+/* Marquee */
+.marquee-container{overflow:hidden;padding:20px 0;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));margin:40px 0}
+.marquee{display:flex;gap:40px;animation:marquee 20s linear infinite;white-space:nowrap;font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:2px}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Footer */
+footer{text-align:center;padding:50px 20px;background:linear-gradient(180deg,transparent,rgba(255,0,110,.05))}
+footer img{height:55px;width:55px;border-radius:50%;margin-bottom:12px;border:2px solid var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.3)}
+footer p{margin:6px 0;font-size:13px;opacity:.7}
+
+/* Reveal Animation */
+.reveal{opacity:0;transform:translateY(50px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+.reveal.active{opacity:1;transform:translateY(0)}
+
+/* Cursor Glow */
+.cursor-glow{position:fixed;width:300px;height:300px;background:radial-gradient(circle,rgba(255,0,110,.08),transparent 70%);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .3s}
+
+@media(max-width:768px){
+.hero h1{font-size:32px}
+.hero p{font-size:14px}
+nav ul{display:none}
+.bento{grid-template-columns:1fr}
+.bento .card:nth-child(1){grid-column:span 1;grid-row:span 1}
+.bento .card:nth-child(1) img{height:150px}
+.bento .card:nth-child(1) h3{font-size:16px}
+.section{padding:50px 4%}
+.title{font-size:28px}
+}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.3s;margin-left:8px}
+.theme-toggle:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:rotate(20deg)}
+
+/* Light Theme Overrides */
+body.light-theme{
+--dark-bg:#f5f5fa;
+--card-bg:rgba(255,255,255,0.7);
+color:#1a1a2e;
+}
+body.light-theme nav{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+body.light-theme .logo{color:#1a1a2e}
+body.light-theme .nav-links a{color:#1a1a2e;background:rgba(0,0,0,.05)}
+body.light-theme .nav-links a:hover{background:rgba(255,0,110,.1);color:var(--neon-pink)}
+body.light-theme .card,body.light-theme .about,body.light-theme .lookup,body.light-theme .timeline,body.light-theme .recent-orders,body.light-theme .add-review,body.light-theme .qr-card,body.light-theme .options,body.light-theme .tier-progress,body.light-theme .streak-section,body.light-theme .leaderboard,body.light-theme .reward-card,body.light-theme .stat-box,body.light-theme .user-card,body.light-theme .table-wrap,body.light-theme .form-section,body.light-theme .cart-section,body.light-theme .tc-section{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .card:hover,body.light-theme .reward-card:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme input,body.light-theme textarea,body.light-theme select{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme input::placeholder,body.light-theme textarea::placeholder{color:rgba(0,0,0,.35)}
+body.light-theme .hero p,body.light-theme .subtitle,body.light-theme .review-text,body.light-theme .desc,body.light-theme .step-desc{opacity:.7}
+body.light-theme .table-row:hover{background:rgba(0,0,0,.02)}
+body.light-theme .table-row{border-color:rgba(0,0,0,.05)}
+body.light-theme .review-date,body.light-theme .step-time,body.light-theme .item-price{opacity:.5}
+body.light-theme .empty-cart p,body.light-theme .no-order p,body.light-theme .no-results{opacity:.6}
+body.light-theme .theme-toggle{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#1a1a2e}
+body.light-theme .home-float{background:rgba(255,255,255,.8);border-color:rgba(0,212,255,.3)}
+body.light-theme .filter-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .filter-btn.active{color:white}
+body.light-theme .categories button{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .categories button.active{color:white}
+body.light-theme .pill{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:#1a1a2e}
+body.light-theme .pill:hover{border-color:var(--neon-cyan)}
+body.light-theme .contact-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.05)}
+body.light-theme .contact-item:hover{border-color:rgba(255,0,110,.2)}
+body.light-theme .gal-item{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.08)}
+body.light-theme .gal-item:hover{border-color:rgba(255,0,110,.3)}
+body.light-theme .lightbox{background:rgba(255,255,255,.95)}
+body.light-theme .lightbox-close{color:#1a1a2e}
+body.light-theme .success-box{background:rgba(255,255,255,.9);color:#1a1a2e}
+body.light-theme .order-summary{border-color:rgba(0,0,0,.08)}
+body.light-theme .bill-row.total-row{border-color:rgba(0,0,0,.1)}
+body.light-theme .total{border-color:rgba(0,0,0,.1)}
+body.light-theme .rbar-track{background:rgba(0,0,0,.06)}
+body.light-theme .toggle{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.1)}
+body.light-theme .toggle.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange))}
+body.light-theme .toggle::after{background:#1a1a2e}
+body.light-theme .size-slider{background:rgba(0,0,0,.08)}
+
+
+/* Stories Bar */
+.stories{width:92%;max-width:1200px;margin:30px auto;display:flex;gap:16px;overflow-x:auto;padding:10px 5px;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:.3s}
+.story:hover{transform:translateY(-4px)}
+.story-ring{width:72px;height:72px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));display:flex;align-items:center;justify-content:center}
+.story-ring.seen{background:rgba(255,255,255,.15)}
+.story-ring img{width:66px;height:66px;border-radius:50%;object-fit:cover;border:3px solid var(--dark-bg)}
+.story-ring span{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));display:flex;align-items:center;justify-content:center;font-size:28px;border:3px solid var(--dark-bg)}
+.story-name{font-size:11px;font-weight:600;opacity:.8;white-space:nowrap}
+
+/* Story Viewer */
+.story-viewer{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:6000;backdrop-filter:blur(10px)}
+.story-viewer.active{display:flex}
+.story-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden;max-width:380px;width:90%;position:relative;animation:pop .3s}
+.story-img{width:100%;height:450px;object-fit:cover}
+.story-content{padding:20px}
+.story-content h3{font-size:18px;margin-bottom:6px}
+.story-content p{font-size:13px;opacity:.7;line-height:1.6;margin-bottom:12px}
+.story-tag{display:inline-block;padding:6px 14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-radius:20px;font-size:12px;font-weight:700}
+.story-close{position:absolute;top:15px;right:15px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.story-progress{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.2)}
+.story-progress .bar{height:100%;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));width:0%;transition:width 5s linear}
+
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="menu.html">Menu</a></li>
+<li><a href="gallery.html">Vibes</a></li>
+<li><a href="reviews.html">Reviews</a></li>
+<li><a href="order.html">Order</a></li>
+<li><a href="order.html" class="cart-badge">🛒 <span id="cart-count">0</span></a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-card">
+<img src="logo.png" alt="Hot Wheels Logo" class="hero-logo">
+<h1><span class="gradient-text">Fresh. Fast.</span><br>Absolutely Slaps. 🔥</h1>
+<p>66+ mouth-watering items across 10 categories — from Turkish Pizza to Tandoori Momos to our iconic Black Burgers. The most aesthetic veg cafe in Jodhpur, no cap.</p>
+<div class="buttons">
+<a href="menu.html" class="btn primary">Explore Menu 🍕</a>
+<a href="order.html" class="btn secondary">Order Now ⚡</a>
+</div>
+<div class="stats-bar">
+<div class="stat"><div class="stat-num">66+</div><div class="stat-label">Menu Items</div></div>
+<div class="stat"><div class="stat-num">10</div><div class="stat-label">Categories</div></div>
+<div class="stat"><div class="stat-num">4PM</div><div class="stat-label">Opens Daily</div></div>
+<div class="stat"><div class="stat-num">4.9⭐</div><div class="stat-label">Rating</div></div>
+</div>
+</div>
+</section>
+
+<div class="marquee-container">
+<div class="marquee">
+🍕 Turkish Pizza · 🥟 Tandoori Momos · 🍔 Black Burgers · 🍝 Pink Sauce Pasta · 🥡 Chinese Fusion · 🍟 Peri Peri Fries · 🌯 Crispy Paneer Wrap · 🔥 Tandoor Snacks · 🍜 Jodhpuri Maggi · 🍕 Turkish Pizza · 🥟 Tandoori Momos · 🍔 Black Burgers · 🍝 Pink Sauce Pasta · 🥡 Chinese Fusion · 🍟 Peri Peri Fries · 🌯 Crispy Paneer Wrap · 🔥 Tandoor Snacks · 🍜 Jodhpuri Maggi ·
+</div>
+</div>
+
+<section class="section reveal">
+<h2 class="title">🔥 Best <span>Sellers</span></h2>
+<div class="bento">
+<div class="card">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800" alt="Hot Wheels Special">
+<h3>Hot Wheels Special Pizza 🍕</h3>
+<p>A tangy, bit spicy but yet a healthy innovation to satisfy the taste buds of our local audience. This one's the main character.</p>
+<span class="price-tag">₹230</span>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800" alt="Tandoori Momos">
+<h3>Tandoori Momos 🔥</h3>
+<p>Dumplings marinated in curd based tandoori masala & grilled to perfection. 8 pcs of pure bliss.</p>
+<span class="price-tag">₹210</span>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800" alt="Spicy Paneer Burger">
+<h3>Spicy Paneer Burger 🍔</h3>
+<p>Crispy paneer patty in soft black bun with special mayo. The aesthetic burger you need.</p>
+<span class="price-tag">₹150</span>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800" alt="Pink Sauce Pasta">
+<h3>Pink Sauce Pasta 🍝</h3>
+<p>Pasta in a blend of tomato and cream sauce. A crowd favorite that hits different.</p>
+<span class="price-tag">₹220</span>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1552611052-33e04de081de?w=800" alt="Paneer Schezwan Noodles">
+<h3>Paneer Schezwan Noodles 🥡</h3>
+<p>Noodles tossed with veggies, paneer & pepper corn. Desi Chinese that slaps.</p>
+<span class="price-tag">₹190</span>
+</div>
+</div>
+<div class="pills">
+<span class="pill">🍕 Turkish Pizza</span>
+<span class="pill">🥟 Momos</span>
+<span class="pill">🍔 Black Burger</span>
+<span class="pill">🍝 Pasta</span>
+<span class="pill">🥡 Chinese</span>
+<span class="pill">🍟 Fries</span>
+<span class="pill">🌯 Rolls</span>
+<span class="pill">🔥 Tandoor</span>
+<span class="pill">🍜 Maggi</span>
+</div>
+</section>
+
+<section class="section reveal">
+<div class="about">
+<h2>✨ About <span style="color:var(--neon-pink)">Us</span></h2>
+<p>Welcome to <strong>Hot Wheels Veggie Fusion</strong>, where every bite is crafted with freshness, quality, and pure passion. From our signature <strong>Turkish Pizzas</strong> to sizzling <strong>Tandoori Momos</strong>, iconic <strong>Black Burgers</strong>, creamy <strong>Pastas</strong>, and our legendary <strong>Jodhpuri Maggi</strong> — we serve 66+ delicious vegetarian items that keep our customers coming back for more. No meat, all heat. Come vibe with us! 🌈</p>
+</div>
+</section>
+
+<section class="section reveal">
+<div class="about">
+<h2>📍 Find <span style="color:var(--neon-cyan)">Us</span></h2>
+<div class="contact-grid">
+<div class="contact-item"><span>📍</span><p>11th B Road, Sardarpura, Jodhpur</p></div>
+<div class="contact-item"><span>📞</span><p>+91 63502 01820</p></div>
+<div class="contact-item"><span>🕒</span><p>Open Daily: 4 PM - 11:30 PM</p></div>
+</div>
+
+<div class="buttons">
+<a href="tel:+916350201820" class="btn primary">Call Now 📞</a>
+<a href="https://wa.me/916350201820" target="_blank" class="btn secondary">WhatsApp 💬</a>
+<a href="https://maps.app.goo.gl/x7PQh9sVYBjaWEax5" target="_blank" class="btn secondary">Directions 🗺️</a>
+</div>
+</div>
+</section>
+
+<footer>
+<img src="logo.png" alt="Logo">
+<p style="font-size:16px;font-weight:700;color:var(--neon-pink)">Hot Wheels Veggie Fusion</p>
+<p>📍 11th B Road, Sardarpura, Jodhpur</p>
+<p>📞 +91 7976313879</p>
+<p>© 2026 All Rights Reserved · Made with 💖 & 🔥</p>
+</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function updateCartCount(){
+const count = cart.reduce((t,i)=>t+i.qty,0);
+document.getElementById('cart-count').innerText = count;
+}
+updateCartCount();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('active');});
+},{threshold:0.1});
+reveals.forEach(r=>observer.observe(r));
+
+// Cursor glow (desktop only)
+const glow = document.getElementById('cursorGlow');
+if(window.matchMedia('(pointer:fine)').matches){
+document.addEventListener('mousemove',e=>{
+glow.style.left=e.clientX+'px';
+glow.style.top=e.clientY+'px';
+});
+} else {glow.style.display='none';}
+</script>
+
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('hw_theme') || 'dark';
+if(currentTheme === 'light'){document.body.classList.add('light-theme');themeToggle.innerText='☀️';}
+else{themeToggle.innerText='🌙';}
+
+themeToggle.addEventListener('click',()=>{
+document.body.classList.toggle('light-theme');
+const isLight = document.body.classList.contains('light-theme');
+localStorage.setItem('hw_theme', isLight?'light':'dark');
+themeToggle.innerText = isLight?'☀️':'🌙';
+});
+</script>
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+<script>
+const storyData = [
+{title:"Today's Special 🔥",text:"Hot Wheels Special Pizza at just ₹199! Our signature tangy-spicy pizza that hits different. Available today only.",tag:"₹31 OFF",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800"},
+{title:"Pizza Drop 🍕",text:"Buy any Turkish Pizza, get Garlic Bread FREE! Perfect combo for your pizza night. Valid till Sunday.",tag:"FREE GARLIC BREAD",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"},
+{title:"Momo Monday 🥟",text:"Every Monday: All Momos at flat ₹150! Steamed, fried, tandoori — your choice. The ultimate momo madness.",tag:"FLAT ₹150",img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800"},
+{title:"Burger BOGO 🍔",text:"Buy 1 Black Burger, Get 1 Free! Tag your burger buddy. Valid on Cheese Burger & Spicy Paneer Burger.",tag:"BUY 1 GET 1",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"},
+{title:"Maggi Mania 🍜",text:"Jodhpuri Maggi + Cold Coffee combo at just ₹199! The OG Jodhpur fusion you can't miss.",tag:"COMBO ₹199",img:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800"},
+{title:"Weekend Vibe 🎉",text:"Weekend Special: 20% OFF on orders above ₹500! Use code WEEKEND20 at checkout via WhatsApp.",tag:"20% OFF",img:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"},
+{title:"New Drop ✨",text:"Introducing Creamy Peri Peri Pasta! Fresh garlic, olive oil, parmesan on perfectly cooked penne. Try it today!",tag:"NEW ARRIVAL",img:"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800"}
+];
+
+let storyTimer = null;
+function openStory(idx){
+const s = storyData[idx];
+document.getElementById('storyImg').src = s.img;
+document.getElementById('storyTitle').innerText = s.title;
+document.getElementById('storyText').innerText = s.text;
+document.getElementById('storyTag').innerText = s.tag;
+document.getElementById('storyViewer').classList.add('active');
+document.body.style.overflow = 'hidden';
+
+// Progress bar animation
+const bar = document.getElementById('storyBar');
+bar.style.width = '0%';
+bar.style.transition = 'none';
+setTimeout(()=>{bar.style.transition = 'width 5s linear';bar.style.width = '100%';},50);
+
+// Auto close
+storyTimer = setTimeout(closeStory, 5000);
+}
+
+function closeStory(e){
+if(e && e.target !== e.currentTarget && !e.target.classList.contains('story-close')) return;
+clearTimeout(storyTimer);
+document.getElementById('storyViewer').classList.remove('active');
+document.body.style.overflow = '';
+document.getElementById('storyBar').style.width = '0%';
+}
+</script>
+</body>
+</html>

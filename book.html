@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#ff006e">
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Table | Hot Wheels Veggie Fusion 🪑</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{
+--neon-pink:#ff006e;--neon-cyan:#00d4ff;--neon-lime:#39ff14;--neon-orange:#ff8a00;--neon-yellow:#fffc00;
+--dark-bg:#0a0a0f;--card-bg:rgba(255,255,255,0.04);
+}
+body{background:var(--dark-bg);color:#fff;min-height:100vh;padding-bottom:80px}
+
+.blob{position:fixed;border-radius:50%;filter:blur(100px);opacity:.1;z-index:-1;pointer-events:none}
+.blob1{width:400px;height:400px;background:var(--neon-pink);top:-100px;right:-100px}
+.blob2{width:350px;height:350px;background:var(--neon-cyan);bottom:-80px;left:-80px}
+
+nav{position:sticky;top:15px;width:92%;max-width:900px;margin:15px auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.7);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.08);border-radius:24px;z-index:1000;box-shadow:0 8px 32px rgba(255,0,110,.1)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--neon-pink);box-shadow:0 0 15px rgba(255,0,110,.4)}
+.nav-links{display:flex;gap:10px;flex-wrap:wrap}
+.nav-links a{color:white;text-decoration:none;font-weight:600;font-size:13px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,.08);transition:.3s;border:1px solid transparent}
+.nav-links a:hover{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);color:var(--neon-pink)}
+
+.container{max-width:800px;margin:auto;padding:20px}
+
+h1{text-align:center;font-size:36px;font-weight:900;margin-bottom:6px}
+h1 span{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{text-align:center;opacity:.6;font-size:15px;margin-bottom:35px}
+
+/* Booking Card */
+.book-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:35px;position:relative;overflow:hidden;margin-bottom:25px}
+.book-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow));opacity:.6}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.form-group{margin-bottom:4px}
+.form-group.full{grid-column:1/-1}
+.form-group label{display:block;font-size:12px;opacity:.8;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+input,textarea,select{width:100%;padding:14px 16px;border:1px solid rgba(255,255,255,.1);outline:none;border-radius:14px;background:var(--card-bg);color:white;font-size:15px;transition:.3s}
+input:focus,textarea:focus,select:focus{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,110,.15)}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.35)}
+
+/* Date picker custom */
+input[type="date"],input[type="time"]{color-scheme:dark}
+
+/* Party size pills */
+.party-size{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.size-pill{padding:10px 18px;border-radius:30px;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;font-weight:600;font-size:14px;cursor:pointer;transition:.3s}
+.size-pill:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+.size-pill.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-color:transparent;color:white;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+
+/* Time slots */
+.time-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:8px}
+.time-slot{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:var(--card-bg);color:white;font-size:13px;font-weight:600;cursor:pointer;transition:.3s;text-align:center}
+.time-slot:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+.time-slot.active{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));border-color:transparent;color:white;box-shadow:0 4px 15px rgba(255,0,110,.3)}
+.time-slot.booked{opacity:.3;pointer-events:none;text-decoration:line-through}
+
+/* Submit */
+.submit-btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:17px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;transition:.3s;box-shadow:0 8px 25px rgba(255,0,110,.4);position:relative;overflow:hidden;margin-top:10px}
+.submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.5s}
+.submit-btn:hover::before{left:100%}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,0,110,.6)}
+
+/* Info cards */
+.info-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:25px}
+.info-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;text-align:center;transition:.3s}
+.info-card:hover{border-color:rgba(255,0,110,.2);transform:translateY(-4px)}
+.info-card .icon{font-size:32px;margin-bottom:10px}
+.info-card h3{font-size:15px;margin-bottom:4px}
+.info-card p{font-size:12px;opacity:.6}
+
+/* Success Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;justify-content:center;align-items:center;z-index:5000;backdrop-filter:blur(10px);padding:20px}
+.modal.active{display:flex}
+.modal-box{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:40px;text-align:center;max-width:420px;width:100%;position:relative;overflow:hidden;animation:pop .4s}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange),var(--neon-yellow))}
+.modal-icon{font-size:60px;margin-bottom:15px}
+.modal-box h2{font-size:24px;font-weight:800;margin-bottom:8px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-box p{opacity:.7;font-size:14px;margin-bottom:8px;line-height:1.6}
+.modal-details{background:rgba(255,255,255,.03);border-radius:16px;padding:18px;margin:20px 0;text-align:left}
+.modal-details div{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05)}
+.modal-details div:last-child{border-bottom:none}
+.modal-details span{opacity:.6}
+.modal-btn{display:inline-block;padding:12px 28px;border-radius:50px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;font-weight:700;text-decoration:none;box-shadow:0 4px 15px rgba(255,0,110,.4)}
+
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white;padding:14px 28px;border-radius:16px;font-weight:700;box-shadow:0 8px 25px rgba(255,0,110,.4);opacity:0;pointer-events:none;transition:all .4s;z-index:2000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.home-float{position:fixed;bottom:25px;left:25px;width:48px;height:48px;display:flex;justify-content:center;align-items:center;background:var(--card-bg);color:var(--neon-cyan);border-radius:50%;text-decoration:none;font-size:18px;border:2px solid rgba(0,212,255,.3);box-shadow:0 8px 25px rgba(0,212,255,.15);transition:.3s;z-index:999}
+.home-float:hover{transform:translateY(-3px);border-color:var(--neon-cyan)}
+
+@media(max-width:600px){
+h1{font-size:26px}
+.form-grid{grid-template-columns:1fr}
+.time-slots{grid-template-columns:repeat(3,1fr)}
+}
+
+/* Select Dropdown Fix */
+select option{background:#1a1a2e;color:white;font-size:14px;padding:10px}
+select optgroup{background:#1a1a2e;color:var(--neon-pink);font-weight:700}
+select:focus option:checked{background:linear-gradient(135deg,var(--neon-pink),var(--neon-orange));color:white}
+body.light-theme select option{background:#f0f0f5;color:#1a1a2e}
+body.light-theme select optgroup{background:#f0f0f5;color:var(--neon-pink)}
+
+</style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+<div class="logo"><img src="logo.png" alt="Logo"> HW Veggie Fusion</div>
+<div class="nav-links">
+<a href="home.html">🏠 Home</a>
+<a href="menu.html">🍔 Menu</a>
+<a href="gallery.html">✨ Vibes</a>
+<a href="reviews.html">💬 Reviews</a>
+<a href="book.html">🪑 Book</a>
+<a href="track.html">📦 Track</a>
+<a href="loyalty.html">🏆 Rewards</a>
+<a href="order.html">🛒 Cart <span id="cart-count">0</span></a>
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+
+<h1>Book a <span>Table</span> 🪑</h1>
+<p class="subtitle">Reserve your spot. Walk-ins welcome, but booking guarantees your vibe.</p>
+
+<div class="info-row">
+<div class="info-card">
+<div class="icon">🕓</div>
+<h3>Open Daily</h3>
+<p>4:00 PM — 11:30 PM</p>
+</div>
+<div class="info-card">
+<div class="icon">👥</div>
+<h3>Group Friendly</h3>
+<p>Up to 12 guests</p>
+</div>
+<div class="info-card">
+<div class="icon">📍</div>
+<h3>Location</h3>
+<p>11th B Road, Sardarpura</p>
+</div>
+</div>
+
+<div class="book-card">
+<div class="form-grid">
+<div class="form-group">
+<label>👤 Your Name</label>
+<input type="text" id="bName" placeholder="Full name">
+</div>
+<div class="form-group">
+<label>📱 Mobile</label>
+<input type="tel" id="bMobile" placeholder="10-digit number" maxlength="10">
+</div>
+<div class="form-group">
+<label>📅 Date</label>
+<input type="date" id="bDate">
+</div>
+<div class="form-group">
+<label>🎉 Occasion (Optional)</label>
+<select id="bOccasion">
+<option value="">Regular Dine-in</option>
+<option>Birthday 🎂</option>
+<option>Date Night 💕</option>
+<option>Group Hangout 🎉</option>
+<option>Family Dinner 👨‍👩‍👧‍👦</option>
+<option>Office Party 💼</option>
+</select>
+</div>
+<div class="form-group full">
+<label>👥 Party Size</label>
+<div class="party-size" id="partySize">
+<span class="size-pill active" data-size="2">2 People</span>
+<span class="size-pill" data-size="3">3</span>
+<span class="size-pill" data-size="4">4</span>
+<span class="size-pill" data-size="5">5</span>
+<span class="size-pill" data-size="6">6</span>
+<span class="size-pill" data-size="8">8</span>
+<span class="size-pill" data-size="10">10</span>
+<span class="size-pill" data-size="12">12+</span>
+</div>
+</div>
+<div class="form-group full">
+<label>⏰ Pick a Time Slot</label>
+<div class="time-slots" id="timeSlots"></div>
+</div>
+<div class="form-group full">
+<label>📝 Special Requests</label>
+<textarea id="bNotes" rows="3" placeholder="Window seat, outdoor table, high chair, allergies, etc."></textarea>
+</div>
+</div>
+<button class="submit-btn" onclick="submitBooking()">Confirm Booking 📲</button>
+</div>
+
+</div>
+
+<!-- Success Modal -->
+<div class="modal" id="bookingModal">
+<div class="modal-box">
+<div class="modal-icon">🎉</div>
+<h2>Booking Confirmed!</h2>
+<p>We've saved your table. See you soon!</p>
+<div class="modal-details" id="modalDetails"></div>
+<p style="opacity:.5;font-size:12px;margin-bottom:20px">A confirmation has been sent via WhatsApp</p>
+<a href="home.html" class="modal-btn">Back to Home</a>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<a href="home.html" class="home-float">🏠</a>
+
+<script>
+let selectedSize = 2;
+let selectedTime = '';
+
+// Set default date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('bDate').value = today;
+document.getElementById('bDate').min = today;
+
+// Party size picker
+document.querySelectorAll('.size-pill').forEach(pill=>{
+pill.addEventListener('click',()=>{
+document.querySelectorAll('.size-pill').forEach(p=>p.classList.remove('active'));
+pill.classList.add('active');
+selectedSize = parseInt(pill.dataset.size);
+});
+});
+
+// Generate time slots (4 PM to 11 PM, 30 min intervals)
+function generateSlots(){
+const container = document.getElementById('timeSlots');
+const slots = [];
+for(let h=16;h<=23;h++){
+slots.push(`${h}:00`);
+if(h<23) slots.push(`${h}:30`);
+}
+
+// Randomly mark some as booked for realism
+const booked = ['16:30','18:00','19:30','20:00','21:30'];
+
+container.innerHTML = slots.map(t=>{
+const isBooked = booked.includes(t);
+return `<div class="time-slot ${isBooked?'booked':''}" data-time="${t}" onclick="pickTime(this)">${t}</div>`;
+}).join('');
+}
+
+function pickTime(el){
+if(el.classList.contains('booked')) return;
+document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('active'));
+el.classList.add('active');
+selectedTime = el.dataset.time;
+}
+
+function submitBooking(){
+const name = document.getElementById('bName').value.trim();
+const mobile = document.getElementById('bMobile').value.trim();
+const date = document.getElementById('bDate').value;
+const occasion = document.getElementById('bOccasion').value;
+const notes = document.getElementById('bNotes').value.trim();
+
+if(!name){showToast('Enter your name');return;}
+if(!mobile || mobile.length<10){showToast('Enter valid mobile');return;}
+if(!date){showToast('Pick a date');return;}
+if(!selectedTime){showToast('Pick a time slot');return;}
+
+// Save booking
+const booking = {id:'BK-'+Math.floor(1000+Math.random()*9000),name,mobile,date,time:selectedTime,size:selectedSize,occasion,notes,status:'confirmed'};
+let bookings = JSON.parse(localStorage.getItem('hw_bookings'))||[];
+bookings.push(booking);
+localStorage.setItem('hw_bookings',JSON.stringify(bookings));
+
+// Show modal
+document.getElementById('modalDetails').innerHTML = `
+<div><span>Name</span><strong>${name}</strong></div>
+<div><span>Date</span><strong>${date}</strong></div>
+<div><span>Time</span><strong>${selectedTime}</strong></div>
+<div><span>Party</span><strong>${selectedSize} people</strong></div>
+<div><span>Booking ID</span><strong style="color:var(--neon-pink)">${booking.id}</strong></div>
+`;
+document.getElementById('bookingModal').classList.add('active');
+
+// WhatsApp confirmation
+const msg = `🪑 *Table Booking Confirmation*%0A%0A*Name:* ${name}%0A*Date:* ${date}%0A*Time:* ${selectedTime}%0A*Party:* ${selectedSize} people%0A*Booking ID:* ${booking.id}%0A${occasion?'*Occasion:* '+occasion+'%0A':''}%0AThank you for choosing Hot Wheels Veggie Fusion! 🔥`;
+setTimeout(()=>{
+window.open(`https://wa.me/917976313879?text=${msg}`,'_blank');
+},1000);
+}
+
+function showToast(msg){
+const toast = document.getElementById('toast');
+toast.innerText = msg;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+generateSlots();
+</script>
+
+<script>
+// PWA Registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW reg failed:',err));
+}
+</script>
+</body>
+</html>
