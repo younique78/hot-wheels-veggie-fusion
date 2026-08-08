@@ -2,7 +2,7 @@
   "name": "Hot Wheels Veggie Fusion",
   "short_name": "HW Veggie",
   "description": "Fresh • Fast • Delicious. Order Turkish Pizza, Momos, Black Burgers & more from Jodhpur's favorite veg cafe.",
-  "start_url": "home.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#ff006e",
